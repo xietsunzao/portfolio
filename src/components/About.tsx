@@ -218,11 +218,11 @@ export function About() {
           className="max-w-3xl mx-auto mb-16 text-center"
         >
           <p className="text-xl text-muted-foreground mb-6">
-            I'm a passionate full-stack developer with a keen eye for design and a love for creating seamless user experiences.
+            I&apos;m a passionate full-stack developer with a keen eye for design and a love for creating seamless user experiences.
             With expertise in modern web technologies, I build scalable and efficient applications that solve real-world problems.
           </p>
           <p className="text-xl text-muted-foreground">
-            When I'm not coding, you can find me exploring new technologies, contributing to open-source projects,
+            When I&apos;m not coding, you can find me exploring new technologies, contributing to open-source projects,
             or sharing my knowledge with the developer community.
           </p>
         </div>
