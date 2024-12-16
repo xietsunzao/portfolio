@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { ThemeToggle } from "@/components/ThemeToggle"
-import { cn } from "@/lib/utils"
 import {
   NavigationMenu,
   NavigationMenuItem,

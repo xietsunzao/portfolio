@@ -6,12 +6,7 @@ import { Github } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import {
-  SiReact,
   SiTypescript,
-  SiTailwindcss,
-  SiNextdotjs,
-  SiPrisma,
-  SiPostgresql,
   SiCodeigniter,
   SiMysql,
   SiBootstrap,
