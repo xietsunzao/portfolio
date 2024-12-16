@@ -144,7 +144,7 @@ export function Hero() {
         ref={titleRef}
         className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl"
       >
-        Hi, I'm <span className="text-primary">Jefri Maruli</span>
+        Hi, I&apos;m <span className="text-primary">Jefri Maruli</span>
       </h1>
       <p 
         ref={descriptionRef}

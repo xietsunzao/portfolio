@@ -89,7 +89,7 @@ export function PageTransition({ children, direction = "up" }: PageTransitionPro
     return () => {
       window.removeEventListener("beforeunload", handleTransitionOut)
     }
-  }, [direction])
+  }, [handleTransitionOut])
 
   return (
     <>
