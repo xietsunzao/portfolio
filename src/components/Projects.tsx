@@ -15,6 +15,7 @@ import {
   SiNestjs,
   SiMongodb,
   SiNodedotjs,
+  SiJavascript,
 } from "react-icons/si"
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
@@ -68,6 +69,18 @@ const projects: Project[] = [
       { icon: <SiMongodb className="h-5 w-5" />, label: "MongoDB" },
       { icon: <SiNodedotjs className="h-5 w-5" />, label: "NodeJS" },
       { icon: <SiTypescript className="h-5 w-5" />, label: "TypeScript" },
+    ]
+  },
+  {
+    title: "Smart Presence Doorlock",
+    description: "A smart doorlock system that uses RFID technology to verify the presence of a person before granting access to a room or space.",
+    image: "/projects/project-4.png",
+    tech: [
+      { icon: <SiNodedotjs className="h-5 w-5" />, label: "NodeJS" },
+      { icon: <SiMysql className="h-5 w-5" />, label: "MySQL" },
+      { icon: <SiLaravel className="h-5 w-5" />, label: "Laravel" },
+      { icon: <SiJavascript className="h-5 w-5" />, label: "JavaScript" },
+      { icon: <SiBootstrap className="h-5 w-5" />, label: "Bootstrap" },
     ]
   }
 ]
