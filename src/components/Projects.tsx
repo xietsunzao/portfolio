@@ -16,6 +16,13 @@ import {
   SiMongodb,
   SiNodedotjs,
   SiJavascript,
+  SiReact,
+  SiDocusaurus,
+  SiMarkdown,
+  SiCss3,
+  SiTailwindcss,
+  SiNextdotjs,
+  SiWebpack,
 } from "react-icons/si"
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
@@ -81,6 +88,20 @@ const projects: Project[] = [
       { icon: <SiLaravel className="h-5 w-5" />, label: "Laravel" },
       { icon: <SiJavascript className="h-5 w-5" />, label: "JavaScript" },
       { icon: <SiBootstrap className="h-5 w-5" />, label: "Bootstrap" },
+    ]
+  },
+  {
+    title: "Ximpli-Me API Documentation",
+    description: "Comprehensive API documentation for the Ximpli-Me platform, built with Docusaurus and React. Features interactive examples, authentication guides, and detailed endpoint references.",
+    image: "/projects/project-5.png",
+    demo: "https://docs.ximpli-me.com",
+    tech: [
+      { icon: <SiReact className="h-5 w-5" />, label: "React" },
+      { icon: <SiTypescript className="h-5 w-5" />, label: "TypeScript" },
+      { icon: <SiDocusaurus className="h-5 w-5" />, label: "Docusaurus" },
+      { icon: <SiMarkdown className="h-5 w-5" />, label: "MDX" },
+      { icon: <SiCss3 className="h-5 w-5" />, label: "CSS" },
+      { icon: <SiWebpack className="h-5 w-5" />, label: "Webpack" },
     ]
   }
 ]
