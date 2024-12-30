@@ -20,8 +20,6 @@ import {
   SiDocusaurus,
   SiMarkdown,
   SiCss3,
-  SiTailwindcss,
-  SiNextdotjs,
   SiWebpack,
 } from "react-icons/si"
 import { useEffect, useRef } from "react"
