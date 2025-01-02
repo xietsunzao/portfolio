@@ -11,6 +11,17 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/',
+        has: [
+          {
+            type: 'host',
+            value: 'jefrimaruli.dev',
+          },
+        ],
+        permanent: true,
+        destination: 'https://www.jefrimaruli.dev',
+      },
+      {
         source: '/:path*',
         has: [
           {
@@ -20,7 +31,6 @@ const nextConfig = {
         ],
         permanent: true,
         destination: 'https://www.jefrimaruli.dev/:path*',
-        basePath: false,
       },
     ];
   },
