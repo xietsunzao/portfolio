@@ -18,8 +18,9 @@ const nextConfig = {
             value: 'jefrimaruli.dev',
           },
         ],
-        destination: 'https://www.jefrimaruli.dev/:path*',
         permanent: true,
+        destination: 'https://www.jefrimaruli.dev/:path*',
+        basePath: false,
       },
     ];
   },
