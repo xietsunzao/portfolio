@@ -21,6 +21,8 @@ import {
   SiMarkdown,
   SiCss3,
   SiWebpack,
+  SiNextdotjs,
+  SiTailwindcss,
 } from "react-icons/si"
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
@@ -100,6 +102,17 @@ const projects: Project[] = [
       { icon: <SiMarkdown className="h-5 w-5" />, label: "MDX" },
       { icon: <SiCss3 className="h-5 w-5" />, label: "CSS" },
       { icon: <SiWebpack className="h-5 w-5" />, label: "Webpack" },
+    ]
+  },
+  {
+    title: "Ximpli-Me Developer",
+    description: "A developer portal for monitoring API key usage, managing access, and tracking integration metrics. Features a dashboard for real-time analytics and usage statistics.",
+    image: "/projects/project-6.png",
+    tech: [
+      { icon: <SiReact className="h-5 w-5" />, label: "React" },
+      { icon: <SiNextdotjs className="h-5 w-5" />, label: "Next.js" },
+      { icon: <SiTypescript className="h-5 w-5" />, label: "TypeScript" },
+      { icon: <SiTailwindcss className="h-5 w-5" />, label: "Tailwind CSS" },
     ]
   }
 ]
