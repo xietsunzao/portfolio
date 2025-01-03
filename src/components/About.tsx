@@ -89,30 +89,30 @@ const experiences = [
   {
     title: "Full Stack Engineer",
     company: "Melkhior Teknologi",
-    period: "Jan 2024 - Present",
+    period: "Jan 2024 - Dec 2024",
     description: "Developed scalable web applications and microservices. Enhanced performance and reliability through CI/CD and Docker.",
-    technologies: ["JavaScript", "TypeScript", "NestJS", "Laravel", "SQL", "MongoDB", "Docker","Microservices"],
+    technologies: ["JavaScript", "TypeScript", "NestJS", "Laravel", "Bootstrap", "MongoDB", "Websocket", "Docker", "Microservices", "Next.js", "Tailwind CSS", "React", "Prisma", "MySQL", "Git", "GitLab", "CI/CD"],
   },
   {
     title: "Back End Developer",
     company: "Kementerian Pekerjaan Umum dan Perumahan Rakyat",
     period: "Aug 2020 - Dec 2023",
     description: "Developed and maintained Developed APIs to receive services from OSS and send processed data back to the OSS system, improving licensing workflow efficiency",
-    technologies: ["PHP", "REST API", "MySQL", "HTML/CSS"],
+    technologies: ["PHP", "CodeIgniter", "OOP", "REST API", "MySQL", "Git", "GitLab"],
   },
   {
     title: "Mentor Back End Developer",
     company: "STMIK Mardira Indonesia",
     period: "Oct 2023 - Feb 2023",
     description: "Mentor students in the Back End Developer program, helping them understand and implement RESTful APIs, database management, and server-side logic.",
-    technologies: ["Backend", "MySQL", "PHP", "OOP"],
+    technologies: ["Backend", "MySQL", "PHP", "OOP", "REST API", "Git", "GitHub", "Slack"],
   },
   {
     title: "Mentor Programming",
     company: "Creative Student Association",
     period: "Sep 2019 - Dec 2020",
     description: "Mentored team in developing IoT-based Smart Presence System, created project-based learning modules for students",
-    technologies: ["HTML/CSS", "JavaScript", "PHP", "MySQL","Laravel"],
+    technologies: ["HTML/CSS", "JavaScript", "NodeJS", "PHP", "MySQL", "Laravel", "Git", "GitHub"],
   },
 ]
 
