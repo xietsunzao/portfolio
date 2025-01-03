@@ -95,13 +95,15 @@ export function PageTransition({ children, direction = "up" }: PageTransitionPro
     <>
       <div
         ref={transitionRef}
-        className="fixed top-0 left-0 w-full h-full bg-background z-[60]"
+        className="fixed inset-0 bg-background z-[60]"
       />
       <div
         ref={transitionRef2}
-        className="fixed top-0 left-0 w-full h-full bg-primary z-[50]"
+        className="fixed inset-0 bg-primary z-[50]"
       />
-      <div ref={contentRef}>{children}</div>
+      <div ref={contentRef} className="min-h-[calc(100vh-4rem)]">
+        {children}
+      </div>
     </>
   )
 } 
