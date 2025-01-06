@@ -95,6 +95,7 @@ const projects: Project[] = [
     description: "Comprehensive API documentation for the Ximpli-Me platform, built with Docusaurus and React. Features interactive examples, authentication guides, and detailed endpoint references.",
     image: "/projects/project-5.png",
     demo: "https://docs.ximpli-me.com",
+    github: "https://github.com/xietsunzao/ximpli-documentation/",
     tech: [
       { icon: <SiReact className="h-5 w-5" />, label: "React" },
       { icon: <SiTypescript className="h-5 w-5" />, label: "TypeScript" },
@@ -113,6 +114,18 @@ const projects: Project[] = [
       { icon: <SiNextdotjs className="h-5 w-5" />, label: "Next.js" },
       { icon: <SiTypescript className="h-5 w-5" />, label: "TypeScript" },
       { icon: <SiTailwindcss className="h-5 w-5" />, label: "Tailwind CSS" },
+    ]
+  },
+  {
+    title: "MyStarguard",
+    description: "Advanced security personnel management system featuring QR code-based attendance tracking and real-time GPS location monitoring. Enables efficient management of security staff deployments and attendance verification.",
+    image: "/projects/project-7.png",
+    demo: "https://mystarguard.com/",
+    tech: [
+      { icon: <SiPhp className="h-5 w-5" />, label: "PHP" },
+      { icon: <SiCodeigniter className="h-5 w-5" />, label: "CodeIgniter" },
+      { icon: <SiMysql className="h-5 w-5" />, label: "MySQL" },
+      { icon: <SiBootstrap className="h-5 w-5" />, label: "Bootstrap" },
     ]
   }
 ]
