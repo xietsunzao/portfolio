@@ -23,6 +23,9 @@ import {
   SiWebpack,
   SiNextdotjs,
   SiTailwindcss,
+  SiVuedotjs,
+  SiNuxtdotjs,
+  SiExpress,
 } from "react-icons/si"
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
@@ -126,6 +129,18 @@ const projects: Project[] = [
       { icon: <SiCodeigniter className="h-5 w-5" />, label: "CodeIgniter" },
       { icon: <SiMysql className="h-5 w-5" />, label: "MySQL" },
       { icon: <SiBootstrap className="h-5 w-5" />, label: "Bootstrap" },
+    ]
+  },
+  {
+    title: "File Explorer",
+    description: "A modern file management system built with Vue.js and Express.js, featuring a clean and intuitive interface for organizing and managing files and folders. Includes features like hierarchical folder structure, drag-and-drop uploads, and dark/light mode support.",
+    image: "/projects/project-8.png",
+    github: "https://github.com/xietsunzao/file-manager",
+    tech: [
+      { icon: <SiVuedotjs className="h-5 w-5" />, label: "Vue.js" },
+      { icon: <SiNuxtdotjs className="h-5 w-5" />, label: "Nuxt.js" },
+      { icon: <SiTailwindcss className="h-5 w-5" />, label: "Tailwind CSS" },
+      { icon: <SiExpress className="h-5 w-5" />, label: "Express.js" },
     ]
   }
 ]
