@@ -26,6 +26,8 @@ import {
   SiVuedotjs,
   SiNuxtdotjs,
   SiExpress,
+  SiPostgresql,
+  SiPrisma,
 } from "react-icons/si"
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
@@ -45,6 +47,17 @@ type Project = {
 }
 
 const projects: Project[] = [
+  {
+    title: "Dalfin Stenella Intelligent Care",
+    description: "A comprehensive patient monitoring platform that integrates medical devices in real-time. The platform processes and presents diverse data needed by hospital stakeholders, connects with Indonesia's national health system (Satu Sehat), and supports synchronization with internal hospital systems.",
+    image: "/projects/project-9.png",
+    tech: [
+      { icon: <SiNestjs className="h-5 w-5" />, label: "NestJS" },
+      { icon: <SiTypescript className="h-5 w-5" />, label: "TypeScript" },
+      { icon: <SiPostgresql className="h-5 w-5" />, label: "PostgreSQL" },
+      { icon: <SiPrisma className="h-5 w-5" />, label: "Prisma" },
+    ]
+  },
   {
     title: "SIMBG - Building Management System",
     description: "A comprehensive building management system for the Ministry of Public Works and Housing, featuring user authentication, real-time monitoring, and detailed reporting.",
