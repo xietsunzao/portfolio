@@ -19,12 +19,12 @@ import {
   SiReact,
   SiDocusaurus,
   SiMarkdown,
-  SiCss3,
+  SiCss,
   SiWebpack,
   SiNextdotjs,
   SiTailwindcss,
   SiVuedotjs,
-  SiNuxtdotjs,
+  SiNuxt,
   SiExpress,
   SiPostgresql,
   SiPrisma,
@@ -117,7 +117,7 @@ const projects: Project[] = [
       { icon: <SiTypescript className="h-5 w-5" />, label: "TypeScript" },
       { icon: <SiDocusaurus className="h-5 w-5" />, label: "Docusaurus" },
       { icon: <SiMarkdown className="h-5 w-5" />, label: "MDX" },
-      { icon: <SiCss3 className="h-5 w-5" />, label: "CSS" },
+      { icon: <SiCss className="h-5 w-5" />, label: "CSS" },
       { icon: <SiWebpack className="h-5 w-5" />, label: "Webpack" },
     ]
   },
@@ -151,7 +151,7 @@ const projects: Project[] = [
     github: "https://github.com/xietsunzao/file-manager",
     tech: [
       { icon: <SiVuedotjs className="h-5 w-5" />, label: "Vue.js" },
-      { icon: <SiNuxtdotjs className="h-5 w-5" />, label: "Nuxt.js" },
+      { icon: <SiNuxt className="h-5 w-5" />, label: "Nuxt.js" },
       { icon: <SiTailwindcss className="h-5 w-5" />, label: "Tailwind CSS" },
       { icon: <SiExpress className="h-5 w-5" />, label: "Express.js" },
     ]
