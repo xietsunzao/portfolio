@@ -165,7 +165,7 @@ export function Projects() {
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: "power4.out" } })
 
-    // Animation sequence (will start after PageTransition completes)
+    // Entrance animation for title and cards
     tl.fromTo(
       titleRef.current,
       { y: 100, opacity: 0 },
@@ -204,7 +204,7 @@ export function Projects() {
       <div className="container mx-auto px-4">
         <h2 
           ref={titleRef}
-          className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-5xl text-center mb-12"
+          className="text-balance text-4xl font-bold tracking-tighter sm:text-5xl md:text-5xl text-center mb-12"
         >
           Featured Projects
         </h2>

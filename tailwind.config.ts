@@ -40,6 +40,10 @@ export default {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
+  			brand: {
+  				DEFAULT: 'hsl(var(--brand))',
+  				foreground: 'hsl(var(--brand-foreground))'
+  			},
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
@@ -55,6 +59,27 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		animation: {
+  			'float-slow': 'float 3s ease-in-out infinite',
+  			'float-medium': 'float 2.5s ease-in-out infinite',
+  			'float-fast': 'float 2s ease-in-out infinite',
+  			'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+  			'shimmer': 'shimmer 2s linear infinite',
+  		},
+  		keyframes: {
+  			float: {
+  				'0%, 100%': { transform: 'translateY(0px)' },
+  				'50%': { transform: 'translateY(-20px)' },
+  			},
+  			'pulse-glow': {
+  				'0%, 100%': { opacity: '1' },
+  				'50%': { opacity: '0.5' },
+  			},
+  			shimmer: {
+  				'0%': { backgroundPosition: '-1000px 0' },
+  				'100%': { backgroundPosition: '1000px 0' },
+  			}
   		}
   	}
   },

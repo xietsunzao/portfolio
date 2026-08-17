@@ -276,7 +276,7 @@ export function About() {
   return (
     <section className="py-24 space-y-8">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-5xl text-center mb-8">
+        <h2 className="text-balance text-3xl font-bold tracking-tighter sm:text-5xl md:text-5xl text-center mb-8">
           About Me
         </h2>
 
@@ -299,7 +299,7 @@ export function About() {
         <div className="space-y-16">
           <h3
             ref={techStackRef}
-            className="text-3xl font-bold text-center mb-8"
+            className="text-balance text-3xl font-bold text-center mb-8"
           >
             Tech Stack
           </h3>
@@ -323,7 +323,7 @@ export function About() {
                         key={tech.name}
                         className="flex flex-col items-center gap-1.5 group px-3"
                       >
-                        <div className="p-2 rounded-lg bg-secondary group-hover:bg-secondary/70 transition-colors">
+                        <div className="p-2 rounded-lg bg-secondary text-foreground group-hover:bg-brand/10 group-hover:text-brand transition-colors">
                           {tech.icon}
                         </div>
                         <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors whitespace-nowrap">
@@ -341,7 +341,7 @@ export function About() {
         {/* Experience Section */}
         <div className="space-y-8 py-16">
           <h3
-            className="text-3xl font-bold text-center mb-12"
+            className="text-balance text-3xl font-bold text-center mb-12"
             ref={experienceRef}
           >
             Experience
@@ -361,7 +361,7 @@ export function About() {
                 }}
               >
                 {/* Timeline dot */}
-                <div className="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-primary border-4 border-background" />
+                <div className="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-brand border-4 border-background" />
 
                 {/* Content */}
                 <div
