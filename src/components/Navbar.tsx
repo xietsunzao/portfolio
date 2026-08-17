@@ -2,7 +2,15 @@
 
 import * as React from "react"
 import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
+import { Menu } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -12,6 +20,10 @@ const navigationItems = [
   { name: "Projects", href: "/projects" },
   { name: "About", href: "/about" },
 ]
+
+function isNavItemActive(href: string, pathname: string) {
+  return href === "/" ? pathname === "/" : pathname.startsWith(href)
+}
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -82,8 +94,7 @@ export function Navbar() {
           )}
         >
           {navigationItems.map((item) => {
-            const isActive =
-              item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
+            const isActive = isNavItemActive(item.href, pathname)
             return (
               <Link
                 key={item.name}
@@ -110,10 +121,57 @@ export function Navbar() {
 
         {/* CTA */}
         <div className="flex items-center gap-2 sm:gap-3">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Open menu"
+                className={cn(
+                  "sm:hidden",
+                  overDarkHero && "text-white hover:bg-white/10 hover:text-white"
+                )}
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className={cn(
+                overDarkHero &&
+                  "border-white/[0.16] bg-[#0b0c14]/90 text-white backdrop-blur-md"
+              )}
+            >
+              {navigationItems.map((item) => {
+                const isActive = isNavItemActive(item.href, pathname)
+                return (
+                  <DropdownMenuItem
+                    key={item.name}
+                    asChild
+                    className={cn(
+                      isActive && "text-brand focus:text-brand",
+                      overDarkHero && "focus:bg-white/10"
+                    )}
+                  >
+                    <Link href={item.href} aria-current={isActive ? "page" : undefined}>
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                )
+              })}
+              <DropdownMenuSeparator className={cn(overDarkHero && "bg-white/[0.16]")} />
+              <DropdownMenuItem
+                asChild
+                className={cn("font-medium", overDarkHero && "focus:bg-white/10")}
+              >
+                <Link href="mailto:jefrimaruli@gmail.com">Get In Touch</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Button
             asChild
             className={cn(
-              "h-9 rounded-full px-4 text-xs shadow-sm sm:h-10 sm:px-5 sm:text-sm",
+              "hidden h-9 rounded-full px-4 text-xs shadow-sm sm:inline-flex sm:h-10 sm:px-5 sm:text-sm",
               overDarkHero && "bg-white text-[#2f2f33] hover:bg-white/85"
             )}
           >
