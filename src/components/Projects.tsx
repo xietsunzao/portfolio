@@ -19,12 +19,12 @@ import {
   SiReact,
   SiDocusaurus,
   SiMarkdown,
-  SiCss3,
+  SiCss,
   SiWebpack,
   SiNextdotjs,
   SiTailwindcss,
   SiVuedotjs,
-  SiNuxtdotjs,
+  SiNuxt,
   SiExpress,
   SiPostgresql,
   SiPrisma,
@@ -117,7 +117,7 @@ const projects: Project[] = [
       { icon: <SiTypescript className="h-5 w-5" />, label: "TypeScript" },
       { icon: <SiDocusaurus className="h-5 w-5" />, label: "Docusaurus" },
       { icon: <SiMarkdown className="h-5 w-5" />, label: "MDX" },
-      { icon: <SiCss3 className="h-5 w-5" />, label: "CSS" },
+      { icon: <SiCss className="h-5 w-5" />, label: "CSS" },
       { icon: <SiWebpack className="h-5 w-5" />, label: "Webpack" },
     ]
   },
@@ -151,7 +151,7 @@ const projects: Project[] = [
     github: "https://github.com/xietsunzao/file-manager",
     tech: [
       { icon: <SiVuedotjs className="h-5 w-5" />, label: "Vue.js" },
-      { icon: <SiNuxtdotjs className="h-5 w-5" />, label: "Nuxt.js" },
+      { icon: <SiNuxt className="h-5 w-5" />, label: "Nuxt.js" },
       { icon: <SiTailwindcss className="h-5 w-5" />, label: "Tailwind CSS" },
       { icon: <SiExpress className="h-5 w-5" />, label: "Express.js" },
     ]
@@ -165,7 +165,7 @@ export function Projects() {
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: "power4.out" } })
 
-    // Animation sequence (will start after PageTransition completes)
+    // Entrance animation for title and cards
     tl.fromTo(
       titleRef.current,
       { y: 100, opacity: 0 },
@@ -204,7 +204,7 @@ export function Projects() {
       <div className="container mx-auto px-4">
         <h2 
           ref={titleRef}
-          className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-5xl text-center mb-12"
+          className="text-balance text-4xl font-bold tracking-tighter sm:text-5xl md:text-5xl text-center mb-12"
         >
           Featured Projects
         </h2>
