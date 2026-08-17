@@ -91,7 +91,7 @@ const experiences = [
     company: "Dalfin HealthCare",
     period: "Feb 2025 - Present",
     description:
-      "Developed API MVP for Dalfin's IoMT ICU hospital digitalization platform, integrating with Indonesia's SATUSEHAT health system. Implemented FHIR-compliant RESTful APIs and led backend team to ensure scalability across microservices architecture.",
+      "Developed API MVP for Dalfin's IoMT ICU hospital digitalization platform, exposing FHIR-compliant RESTful APIs so hospitals can integrate patient data into their own SIMRS. Led backend team to ensure scalability across microservices architecture.",
     technologies: [
       "NestJS",
       "TypeScript",

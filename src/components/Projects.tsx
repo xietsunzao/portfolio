@@ -43,14 +43,16 @@ type Project = {
   image: string
   github?: string
   demo?: string
+  caseStudy?: string
   tech: TechIcon[]
 }
 
 const projects: Project[] = [
   {
     title: "Dalfin Stenella Intelligent Care",
-    description: "A comprehensive patient monitoring platform that integrates medical devices in real-time. The platform processes and presents diverse data needed by hospital stakeholders, connects with Indonesia's national health system (Satu Sehat), and supports synchronization with internal hospital systems.",
+    description: "A comprehensive patient monitoring platform that integrates medical devices in real-time. The platform processes and presents diverse data needed by hospital stakeholders, and supports integration with a hospital's own SIMRS.",
     image: "/projects/project-9.png",
+    caseStudy: "/projects/dalfin-stenella",
     tech: [
       { icon: <SiNestjs className="h-5 w-5" />, label: "NestJS" },
       { icon: <SiTypescript className="h-5 w-5" />, label: "TypeScript" },
@@ -244,6 +246,11 @@ export function Projects() {
                     ))}
                   </div>
                   <div className="flex gap-3">
+                    {project.caseStudy && (
+                      <Button size="sm" asChild>
+                        <Link href={project.caseStudy}>Case Study</Link>
+                      </Button>
+                    )}
                     {project.github && (
                       <Button variant="outline" size="sm" asChild>
                         <Link href={project.github} target="_blank">
