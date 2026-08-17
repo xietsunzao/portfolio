@@ -150,10 +150,6 @@ export function fluidSimulation(canvas, options = {}) {
         return true;
     }
 
-    function clamp01(input) {
-        return Math.min(Math.max(input, 0), 1);
-    }
-
     function isMobile() {
         return /Mobi|Android/i.test(navigator.userAgent);
     }
@@ -1170,12 +1166,12 @@ export function fluidSimulation(canvas, options = {}) {
         t = v * (1 - (1 - f) * s);
 
         switch (i % 6) {
-            case 0: r = v, g = t, b = p; break;
-            case 1: r = q, g = v, b = p; break;
-            case 2: r = p, g = v, b = t; break;
-            case 3: r = p, g = q, b = v; break;
-            case 4: r = t, g = p, b = v; break;
-            case 5: r = v, g = p, b = q; break;
+            case 0: r = v; g = t; b = p; break;
+            case 1: r = q; g = v; b = p; break;
+            case 2: r = p; g = v; b = t; break;
+            case 3: r = p; g = q; b = v; break;
+            case 4: r = t; g = p; b = v; break;
+            case 5: r = v; g = p; b = q; break;
         }
         return { r, g, b };
     }
