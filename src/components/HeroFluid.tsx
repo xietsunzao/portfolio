@@ -27,7 +27,8 @@ export function HeroFluid() {
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas || prefersReducedMotion()) return
-    const destroy = fluidSimulation(canvas)
+    // A light entrance: the full burst whites out the heading for seconds.
+    const destroy = fluidSimulation(canvas, { burstSplats: 8, burstWaves: 0 })
     return () => destroy()
   }, [])
 

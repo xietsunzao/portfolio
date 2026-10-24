@@ -195,85 +195,31 @@ export function About() {
   useEffect(() => {
     if (prefersReducedMotion()) return;
 
-    // Bio section animation
-    gsap.fromTo(
-      bioRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: bioRef.current,
-          start: "top 80%",
-        },
+    // Short ease-out reveals; the bio starts in view, so it must not linger hidden.
+    const reveal = { opacity: 1, y: 0, x: 0, duration: 0.5, ease: "power3.out" };
+    const ctx = gsap.context(() => {
+      for (const el of [bioRef.current, techStackRef.current, experienceRef.current]) {
+        gsap.fromTo(el, { opacity: 0, y: 16 }, {
+          ...reveal,
+          scrollTrigger: { trigger: el, start: "top 85%" },
+        });
       }
-    );
-
-    // Tech stack title animation
-    gsap.fromTo(
-      techStackRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: techStackRef.current,
-          start: "top 80%",
-        },
-      }
-    );
-
-    // Cards stagger animation
-    gsap.fromTo(
-      cardsRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        scrollTrigger: {
-          trigger: cardsRef.current[0],
-          start: "top 80%",
-        },
-      }
-    );
-
-    // Experience title animation
-    gsap.fromTo(
-      experienceRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: experienceRef.current,
-          start: "top 80%",
-        },
-      }
-    );
-
-    // Timeline items stagger animation
-    gsap.fromTo(
-      timelineRefs.current,
-      {
-        opacity: 0,
-        x: (index) => (index % 2 === 0 ? -50 : 50),
-      },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 1,
-        stagger: 0.3,
-        scrollTrigger: {
-          trigger: timelineRefs.current[0],
-          start: "top 80%",
-        },
-      }
-    );
+      gsap.fromTo(cardsRef.current, { opacity: 0, y: 16 }, {
+        ...reveal,
+        stagger: 0.06,
+        scrollTrigger: { trigger: cardsRef.current[0], start: "top 85%" },
+      });
+      gsap.fromTo(
+        timelineRefs.current,
+        { opacity: 0, x: (index) => (index % 2 === 0 ? -16 : 16) },
+        {
+          ...reveal,
+          stagger: 0.08,
+          scrollTrigger: { trigger: timelineRefs.current[0], start: "top 85%" },
+        }
+      );
+    });
+    return () => ctx.revert();
   }, []);
 
   return (

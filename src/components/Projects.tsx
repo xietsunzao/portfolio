@@ -167,35 +167,15 @@ export function Projects() {
 
   useEffect(() => {
     if (prefersReducedMotion()) return
-    const tl = gsap.timeline({ defaults: { ease: "power4.out" } })
+    const tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 0.5 } })
 
-    // Entrance animation for title and cards
-    tl.fromTo(
-      titleRef.current,
-      { y: 100, opacity: 0 },
-      { 
-        y: 0, 
-        opacity: 1, 
-        duration: 1,
-        ease: "power4.inOut"
-      }
-    )
+    // Kept under ~1s total so a skimming visitor never waits on hidden cards.
+    tl.fromTo(titleRef.current, { y: 16, opacity: 0 }, { y: 0, opacity: 1 })
       .fromTo(
         cardsRef.current,
-        { 
-          opacity: 0,
-          y: 50,
-          scale: 0.95,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 1,
-          stagger: 0.2,
-          ease: "power4.inOut",
-        },
-        "-=0.5"
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, stagger: 0.05 },
+        "-=0.3"
       )
 
     return () => {
