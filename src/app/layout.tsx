@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Hanken_Grotesk, Martian_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import { RouteTransition } from "@/components/RouteTransition";
 import { Footer } from "@/components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const sans = Hanken_Grotesk({
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// The wdth axis lets labels run condensed (fontFamily.mono in tailwind.config.ts).
+const mono = Martian_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
+  axes: ["wdth"],
 });
 
 export const metadata: Metadata = {
@@ -39,21 +41,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Font variables sit on <html> because Tailwind's preflight sets font-family there.
   return (
-    <html lang="en" suppressHydrationWarning className="scroll-smooth">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${sans.variable} ${mono.variable} scroll-smooth`}
+    >
+      <body className="antialiased">
         <a
           href="#main-content"
-          className="fixed left-4 top-4 z-[200] -translate-y-20 rounded-md bg-brand px-4 py-2 text-sm font-medium text-brand-foreground transition-transform focus:translate-y-0"
+          className="fixed left-4 top-4 z-[200] -translate-y-20 bg-foreground px-4 py-2 text-sm font-medium text-background transition-transform focus:translate-y-0"
         >
           Skip to content
         </a>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
+          defaultTheme="system"
+          enableSystem
           disableTransitionOnChange
         >
           <Navbar />

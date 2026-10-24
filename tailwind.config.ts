@@ -1,4 +1,7 @@
 import type { Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
+
+const token = (name: string): string => `oklch(var(--${name}) / <alpha-value>)`;
 
 export default {
     darkMode: ["class"],
@@ -10,76 +13,48 @@ export default {
   theme: {
   	extend: {
   		colors: {
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
+  			background: token('background'),
+  			foreground: token('foreground'),
   			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
+  				DEFAULT: token('card'),
+  				foreground: token('card-foreground')
   			},
   			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
-  				foreground: 'hsl(var(--popover-foreground))'
+  				DEFAULT: token('popover'),
+  				foreground: token('popover-foreground')
   			},
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
+  				DEFAULT: token('primary'),
+  				foreground: token('primary-foreground')
   			},
   			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
+  				DEFAULT: token('secondary'),
+  				foreground: token('secondary-foreground')
   			},
   			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
+  				DEFAULT: token('muted'),
+  				foreground: token('muted-foreground')
   			},
   			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
+  				DEFAULT: token('accent'),
+  				foreground: token('accent-foreground')
   			},
-  			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
-  			},
-  			brand: {
-  				DEFAULT: 'hsl(var(--brand))',
-  				foreground: 'hsl(var(--brand-foreground))'
-  			},
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
-  			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
-  			}
+  			brand: token('brand'),
+  			border: token('border'),
+  			input: token('input'),
+  			ring: token('ring')
+  		},
+  		fontFamily: {
+  			sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
+  			mono: [
+  				['var(--font-mono)', ...defaultTheme.fontFamily.mono],
+  				{ fontVariationSettings: '"wdth" 87.5' }
+  			]
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'var(--radius)',
   			sm: 'var(--radius)'
-  		},
-  		animation: {
-  			'float-slow': 'float 3s ease-in-out infinite',
-  			'float-medium': 'float 2.5s ease-in-out infinite',
-  			'float-fast': 'float 2s ease-in-out infinite',
-  			'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-  			'shimmer': 'shimmer 2s linear infinite',
-  		},
-  		keyframes: {
-  			float: {
-  				'0%, 100%': { transform: 'translateY(0px)' },
-  				'50%': { transform: 'translateY(-20px)' },
-  			},
-  			'pulse-glow': {
-  				'0%, 100%': { opacity: '1' },
-  				'50%': { opacity: '0.5' },
-  			},
-  			shimmer: {
-  				'0%': { backgroundPosition: '-1000px 0' },
-  				'100%': { backgroundPosition: '1000px 0' },
-  			}
   		}
   	}
   },

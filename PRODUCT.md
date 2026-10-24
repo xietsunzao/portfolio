@@ -23,10 +23,11 @@ Generic SaaS template look: no hero-metric cards (big number, small label, suppo
 ## Design Principles
 
 - Sharp over soft: zero border-radius is a deliberate, load-bearing choice, not an oversight. Every new component respects it.
-- One accent, used deliberately: a single violet accent tied to the hero's own fluid palette carries emphasis (active nav state, hover, key CTAs). It does not multiply into a rainbow.
-- Motion signals, it doesn't decorate: the fluid hero, word-by-word reveal, and route transition all exist to communicate state (loading, navigating, arriving), not to perform for their own sake.
+- One accent, used deliberately: a single vermilion accent, like red pencil on a drawing, marks emphasis (map packets, link underlines, active nav state, the focus ring). It never sets body text, because in light mode it measures 4.0:1 against the paper ground. It does not multiply into a rainbow.
+- Light first: the reader is a recruiter on a laptop in daylight or on a phone between meetings, so the paper theme is designed first. Dark follows the OS setting and has a toggle.
+- Motion signals, it doesn't decorate: packets on the hero's systems map show data moving through a real system, and the route line shows that navigation started. Neither performs for its own sake.
 - Show the work, don't summarize it: real project descriptions, real dates, real numbers. No lorem ipsum, no placeholder metrics.
 
 ## Accessibility & Inclusion
 
-Respect `prefers-reduced-motion`: the WebGL fluid simulation, the word-by-word hero reveal, and the route-transition burst should fall back to a static or minimal-motion state for users who've requested reduced motion at the OS level. Standard WCAG AA contrast and keyboard/focus-visible support apply across all interactive elements.
+Respect `prefers-reduced-motion`: the map's packets are hidden and the route line is skipped for users who've requested reduced motion at the OS level. The map itself is static, so it loses nothing. Standard WCAG AA contrast and keyboard/focus-visible support apply across all interactive elements.
