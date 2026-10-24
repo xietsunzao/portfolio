@@ -31,6 +31,7 @@ import {
 } from "react-icons/si"
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
+import { prefersReducedMotion } from "@/lib/utils"
 
 type TechIcon = {
   icon: React.ReactNode
@@ -47,7 +48,7 @@ type Project = {
   tech: TechIcon[]
 }
 
-const projects: Project[] = [
+export const projects: Project[] = [
   {
     title: "Dalfin Stenella Intelligent Care",
     description: "A comprehensive patient monitoring platform that integrates medical devices in real-time. The platform processes and presents diverse data needed by hospital stakeholders, and supports integration with a hospital's own SIMRS.",
@@ -165,6 +166,7 @@ export function Projects() {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
+    if (prefersReducedMotion()) return
     const tl = gsap.timeline({ defaults: { ease: "power4.out" } })
 
     // Entrance animation for title and cards

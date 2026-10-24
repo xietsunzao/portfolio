@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { fluidSimulation } from "@/lib/fluidSimulation"
-import { cn } from "@/lib/utils"
+import { cn, prefersReducedMotion } from "@/lib/utils"
 
 // Lives once in the root layout (never remounted per page) so it can cover
 // the screen the instant a nav link is clicked and only reveal the
@@ -37,6 +37,7 @@ export function RouteTransition() {
       if (anchor.target === "_blank") return
       const href = anchor.getAttribute("href")
       if (!href || !href.startsWith("/") || href === pathname) return
+      if (prefersReducedMotion()) return
 
       e.preventDefault()
       coverStartRef.current = performance.now()
