@@ -60,7 +60,6 @@ export const projects: readonly Project[] = [
       "Docusaurus site documenting the Ximpli-Me API, with authentication guides, endpoint references and interactive examples.",
     image: "/projects/project-5.png",
     imageAlt: "Ximpli-Me API documentation home page",
-    demo: "https://docs.ximpli-me.com",
     github: "https://github.com/xietsunzao/ximpli-documentation/",
     stack: ["React", "TypeScript", "Docusaurus", "MDX", "CSS", "Webpack"],
   },
