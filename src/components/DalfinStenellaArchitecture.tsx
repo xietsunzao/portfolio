@@ -167,7 +167,7 @@ export function DalfinStenellaArchitecture() {
       </text>
 
       {/* Hospital site group */}
-      <rect x={140} y={60} width={620} height={430} className="fill-transparent stroke-border" strokeWidth={1} strokeDasharray="3 4" />
+      <rect x={140} y={60} width={620} height={430} className="fill-transparent stroke-muted-foreground" strokeWidth={1} strokeDasharray="3 4" />
       <GroupLabel x={160} y={50} label="Hospital site, on-premises" />
 
       <Box x={180} y={100} w={230} h={60} icon={Activity} label="Medical devices" sublabel="patient monitor, pump, ventilator" />
@@ -179,7 +179,7 @@ export function DalfinStenellaArchitecture() {
       <Box x={500} y={325} w={230} h={60} icon={LayoutDashboard} label="Dashboard" sublabel="live view for clinicians" />
 
       {/* Cloud group */}
-      <rect x={810} y={60} width={270} height={130} className="fill-transparent stroke-border" strokeWidth={1} strokeDasharray="3 4" />
+      <rect x={810} y={60} width={270} height={130} className="fill-transparent stroke-muted-foreground" strokeWidth={1} strokeDasharray="3 4" />
       <GroupLabel x={830} y={50} label="Cloud" />
 
       <Box x={840} y={100} w={210} h={60} icon={KeyRound} label="License / contract API" sublabel="30-day offline grace period" accent />
@@ -231,7 +231,7 @@ export function DalfinStenellaArchitecture() {
         <LegendItem
           x={640}
           y={700}
-          swatch={<rect x={0} y={-8} width={28} height={16} className="fill-transparent stroke-border" strokeWidth={1} strokeDasharray="3 3" />}
+          swatch={<rect x={0} y={-8} width={28} height={16} className="fill-transparent stroke-muted-foreground" strokeWidth={1} strokeDasharray="3 3" />}
         >
           Deployment boundary
         </LegendItem>

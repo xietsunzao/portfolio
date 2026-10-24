@@ -140,7 +140,7 @@ Flat. There are no shadows and no blur. Depth comes from ink outlines, hairline 
 - Text links in graphite. Hover turns them ink with a vermilion underline offset 6px. The current page carries a 2px vermilion bar. The theme switch is a text button reading Light or Dark, not a sun and moon. Phones keep the same single row.
 
 ### Systems Map
-- An SVG of the Stenella containers. Nodes are paper rectangles with a 1.4px ink outline (2.8px for the key node). Connectors are 1.2px graphite with arrowheads. Zones are dashed hairline. Labels use Martian Mono at 600; sub-labels are graphite and never render below 10px.
+- An SVG of the Stenella containers. Nodes are paper rectangles with a 1.4px ink outline (2.8px for the key node). Connectors are 1.2px graphite with arrowheads. Zones are dashed graphite, because they mark where each service runs. Labels use Martian Mono at 600; sub-labels are graphite and never render below 10px.
 - Packets are vermilion dots that run along the connectors three times with SVG `animateMotion`, then rest. Pointing at the map replays them. They are hidden under `prefers-reduced-motion`.
 - Under 768px the map becomes a vertical flow list with square ink-outlined nodes on a graphite line. The list is the text version of the map at every width.
 

@@ -97,7 +97,7 @@ export function SystemsMap(): React.JSX.Element {
           y="290"
           width="184"
           height="96"
-          className="fill-none stroke-border"
+          className="fill-none stroke-muted-foreground"
           strokeDasharray="4 4"
         />
 
