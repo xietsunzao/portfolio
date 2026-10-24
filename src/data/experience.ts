@@ -56,7 +56,7 @@ export const experience: readonly Role[] = [
   },
   {
     title: "Back End Developer",
-    company: "Kementerian Pekerjaan Umum dan Perumahan Rakyat",
+    company: "Ministry of Public Works and Housing",
     period: "Aug 2020 - Dec 2023",
     description:
       "Developed and maintained the APIs that receive licensing requests from the national OSS system and send processed results back to it.",

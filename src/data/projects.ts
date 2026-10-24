@@ -2,7 +2,9 @@ export type Project = {
   title: string
   description: string
   image: string
+  imageAlt?: string
   stack: readonly string[]
+  facts?: readonly string[]
   demo?: string
   github?: string
   caseStudy?: string
@@ -14,14 +16,21 @@ export const projects: readonly Project[] = [
     description:
       "Real-time ICU patient monitoring, installed on-premises in each hospital. Bedside devices stream vitals to a live dashboard for ICU staff, and FHIR APIs hand the data to the hospital's own SIMRS.",
     image: "/projects/project-9.png",
+    imageAlt: "Dalfin ICU dashboard graphic with SATUSEHAT and BPJS Kesehatan integration labels",
     caseStudy: "/projects/dalfin-stenella",
     stack: ["NestJS", "TypeScript", "PostgreSQL", "Prisma"],
+    facts: [
+      "Designed the on-premises deployment, a Docker Compose bundle of the NestJS backend, React dashboard and FastAPI telemetry service.",
+      "Hospital IT staff install it themselves through a desktop installer, since patient data stays on site and no engineer is there to help.",
+      "Licensing checks a cloud API with a 30-day offline grace period, so a network outage never stops monitoring.",
+    ],
   },
   {
     title: "SIMBG - Building Management System",
     description:
       "Building permit system for Indonesia's Ministry of Public Works and Housing, including the APIs that exchange licensing requests and results with the national OSS system.",
     image: "/projects/project-1.png",
+    imageAlt: "SIMBG landing page, Sistem Informasi Manajemen Bangunan Gedung",
     demo: "https://simbg.pu.go.id",
     stack: ["PHP", "CodeIgniter", "MySQL", "Bootstrap"],
   },
@@ -50,6 +59,7 @@ export const projects: readonly Project[] = [
     description:
       "Docusaurus site documenting the Ximpli-Me API, with authentication guides, endpoint references and interactive examples.",
     image: "/projects/project-5.png",
+    imageAlt: "Ximpli-Me API documentation home page",
     demo: "https://docs.ximpli-me.com",
     github: "https://github.com/xietsunzao/ximpli-documentation/",
     stack: ["React", "TypeScript", "Docusaurus", "MDX", "CSS", "Webpack"],
@@ -66,6 +76,7 @@ export const projects: readonly Project[] = [
     description:
       "Staff system for security guard teams. Guards clock in by scanning a QR code, and supervisors see each guard's GPS location live.",
     image: "/projects/project-7.png",
+    imageAlt: "MyStarguard admin page assigning guards to a site, with clock-in and clock-out times",
     demo: "https://mystarguard.com/",
     stack: ["PHP", "CodeIgniter", "MySQL", "Bootstrap"],
   },

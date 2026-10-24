@@ -33,7 +33,7 @@ export default function DalfinStenellaCaseStudy() {
         </p>
 
         <section className="mt-16 space-y-4">
-          <h2 className="text-2xl font-semibold">The problem</h2>
+          <h2 id="problem" className="text-2xl font-semibold">The problem</h2>
           <p className="text-muted-foreground">
             Before this system, ICU nurses monitored patients the way most hospitals still do:
             walk to each bedside, read the numbers off the patient monitor or ventilator, and write
@@ -56,7 +56,7 @@ export default function DalfinStenellaCaseStudy() {
 
       <div className="mx-auto max-w-3xl">
         <section className="mt-12 space-y-4">
-          <h2 className="text-2xl font-semibold">The solution</h2>
+          <h2 id="solution" className="text-2xl font-semibold">The solution</h2>
           <p className="text-muted-foreground">
             I designed and built the on-premises deployment architecture: a Docker Compose bundle
             (NestJS backend, React dashboard, FastAPI telemetry service) installed at each hospital
@@ -73,7 +73,7 @@ export default function DalfinStenellaCaseStudy() {
       </div>
 
       <section className="mx-auto mt-12 max-w-5xl space-y-4">
-        <h2 className="text-2xl font-semibold">Architecture</h2>
+        <h2 id="architecture" className="text-2xl font-semibold">Architecture</h2>
         <p className="text-muted-foreground">
           Simplified view of the deployment: on-premises services at the hospital, talking to a
           small set of cloud services for licensing, and exporting data to the hospital&apos;s
@@ -85,7 +85,7 @@ export default function DalfinStenellaCaseStudy() {
       </section>
 
       <section className="mx-auto mt-12 max-w-5xl space-y-4">
-        <h2 className="text-2xl font-semibold">Tech stack</h2>
+        <h2 id="tech-stack" className="text-2xl font-semibold">Tech stack</h2>
         <p className="text-muted-foreground">
           Why this combination, specifically for an on-premises hospital deployment.
         </p>

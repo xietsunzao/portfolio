@@ -61,7 +61,101 @@
   }
 }
 
-/* !important so it also beats the hero's inline transition delays. */
+@layer components {
+  /* Header, sections and footer share one column so their edges line up. */
+  .page-column {
+    margin-inline: auto;
+    max-width: 80rem;
+    padding-inline: clamp(20px, 5vw, 72px);
+  }
+
+  .spine {
+    --spine-pad: clamp(26px, 4vw, 56px);
+    padding-left: var(--spine-pad);
+    border-left: 1px solid oklch(var(--border));
+  }
+  /* Both markers are offset so their centres land on the 1px spine line. */
+  .spine-node,
+  .spine-tick {
+    position: relative;
+  }
+  .spine-node::before {
+    content: "";
+    position: absolute;
+    left: calc(-1 * var(--spine-pad) - 7px);
+    top: 0.32em;
+    width: 13px;
+    height: 13px;
+    background: oklch(var(--background));
+    border: 2px solid oklch(var(--foreground));
+  }
+  .spine-tick::before {
+    content: "";
+    position: absolute;
+    left: calc(-1 * var(--spine-pad) - 4px);
+    top: 0.5em;
+    width: 7px;
+    height: 7px;
+    background: oklch(var(--foreground));
+  }
+
+  .flow-list {
+    position: relative;
+    padding-left: 26px;
+  }
+  .flow-list::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    bottom: 22px;
+    border-left: 1px solid oklch(var(--muted-foreground));
+  }
+  .flow-list > li {
+    position: relative;
+    padding-bottom: 16px;
+  }
+  .flow-list > li::before {
+    content: "";
+    position: absolute;
+    left: -26px;
+    top: 6px;
+    width: 11px;
+    height: 11px;
+    background: oklch(var(--background));
+    border: 1.5px solid oklch(var(--foreground));
+  }
+
+  .mono-label {
+    @apply font-mono text-[0.78rem] leading-snug text-muted-foreground;
+  }
+
+  .pencil-link {
+    display: inline-block;
+    padding-block: 8px 2px;
+    font-weight: 600;
+    border-bottom: 2px solid oklch(var(--brand));
+  }
+  .pencil-link:hover {
+    border-color: oklch(var(--foreground));
+  }
+
+  .nav-link {
+    display: inline-block;
+    padding-block: 10px;
+    color: oklch(var(--muted-foreground));
+    text-decoration-color: oklch(var(--brand));
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+  }
+  .nav-link:hover,
+  .nav-link[aria-current] {
+    color: oklch(var(--foreground));
+    text-decoration-line: underline;
+  }
+}
+
+/* !important so it beats class-level durations and inline transition styles. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
