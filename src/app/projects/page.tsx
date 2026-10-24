@@ -1,5 +1,13 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { projects } from "@/data/projects"
+
+export const metadata: Metadata = {
+  title: "All projects",
+  description:
+    "Projects by Jefri Maruli, from ICU monitoring for hospitals and building permits for a ministry to tools for Bank Indonesia and security guard teams.",
+  alternates: { canonical: "/projects" },
+}
 
 export default function ProjectsPage(): React.JSX.Element {
   return (

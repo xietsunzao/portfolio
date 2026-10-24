@@ -1,8 +1,14 @@
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { SystemsMap } from "@/components/SystemsMap"
 import { experience } from "@/data/experience"
 import { projects, type Project } from "@/data/projects"
+import { siteUrl } from "@/lib/site"
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+}
 
 function pick(title: string): Project {
   const project = projects.find((p) => p.title === title)
@@ -13,6 +19,18 @@ function pick(title: string): Project {
 const featured = pick("Dalfin Stenella Intelligent Care")
 const more = ["SIMBG - Building Management System", "Ximpli-Me API Documentation", "MyStarguard"].map(pick)
 const currentRole = experience.find((role) => role.company === "Dalfin HealthCare")
+const github = "https://github.com/xietsunzao"
+const linkedin = "https://linkedin.com/in/jefri-maruli"
+
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Jefri Maruli",
+  url: siteUrl,
+  jobTitle: currentRole?.title,
+  worksFor: currentRole && { "@type": "Organization", name: currentRole.company },
+  sameAs: [github, linkedin],
+}
 
 const tools = [
   "NestJS",
@@ -34,6 +52,11 @@ const sectionSpacing = "pt-[clamp(48px,7vw,104px)]"
 export default function Home(): React.JSX.Element {
   return (
     <main id="main-content">
+      <script
+        type="application/ld+json"
+        // Escaping "<" stops a string in the data from closing the script tag.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(person).replace(/</g, "\\u003c") }}
+      />
       <section className="page-column grid items-center gap-10 py-[clamp(40px,6vw,96px)] xl:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] xl:gap-16">
         <div>
           <h1 className="display-heading">
@@ -185,10 +208,10 @@ export default function Home(): React.JSX.Element {
               jefrimaruli@gmail.com
             </a>
             <div className="mt-6 flex flex-wrap gap-x-6">
-              <a href="https://github.com/xietsunzao" className="pencil-link">
+              <a href={github} className="pencil-link">
                 GitHub
               </a>
-              <a href="https://linkedin.com/in/jefri-maruli" className="pencil-link">
+              <a href={linkedin} className="pencil-link">
                 LinkedIn
               </a>
             </div>

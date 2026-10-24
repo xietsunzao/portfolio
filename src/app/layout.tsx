@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import { RouteTransition } from "@/components/RouteTransition";
 import { Footer } from "@/components/Footer";
+import { siteUrl } from "@/lib/site";
 
 const sans = Hanken_Grotesk({
   variable: "--font-sans",
@@ -19,21 +20,17 @@ const mono = Martian_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jefri Maruli — Full-Stack Developer",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Jefri Maruli, senior backend developer",
+    template: "%s | Jefri Maruli",
+  },
   description:
-    "Portfolio of Jefri Maruli, a full-stack developer building fast, thoughtful web experiences from idea to deploy.",
-  openGraph: {
-    title: "Jefri Maruli — Full-Stack Developer",
-    description:
-      "Portfolio of Jefri Maruli, a full-stack developer building fast, thoughtful web experiences from idea to deploy.",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Jefri Maruli — Full-Stack Developer",
-    description:
-      "Portfolio of Jefri Maruli, a full-stack developer building fast, thoughtful web experiences from idea to deploy.",
-  },
+    "I build the backends hospitals and ministries run on. Senior backend developer at Dalfin HealthCare, working on the Stenella ICU monitoring platform.",
+  // Left without a title or description, which every page would inherit. Next fills in
+  // each page's own instead.
+  openGraph: { type: "website", siteName: "Jefri Maruli" },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({

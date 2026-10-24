@@ -5,9 +5,10 @@ import Link from "next/link"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Dalfin Stenella Intelligent Care — Case Study",
+  title: "Dalfin Stenella Intelligent Care case study",
   description:
-    "How the Stenella Care platform delivers real-time ICU patient monitoring to hospitals with an on-premises deployment, license-gated offline resilience, and integration with a hospital's own SIMRS.",
+    "How Stenella streams bedside vitals to a live ICU dashboard, runs on-premises in each hospital, and hands patient data to the hospital's SIMRS over FHIR.",
+  alternates: { canonical: "/projects/dalfin-stenella" },
 }
 
 const sectionSpacing = "pt-[clamp(48px,7vw,104px)]"
