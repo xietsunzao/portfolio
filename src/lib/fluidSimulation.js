@@ -9,6 +9,8 @@
 //   orbit     - whether the invisible auto-cursor orbits forever (default true);
 //               false gives a one-shot load-burst that just dissipates, for use
 //               as a transient transition effect rather than a persistent hero
+//   burstSplats - splats in the initial load burst (default 34)
+//   burstWaves  - follow-up waves of 10-19 splats after the burst (default 8)
 export function fluidSimulation(canvas, options = {}) {
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
@@ -16,6 +18,8 @@ export function fluidSimulation(canvas, options = {}) {
     const hueMin = options.hueMin ?? 0.5;
     const hueRange = options.hueRange ?? 0.42;
     const orbitEnabled = options.orbit ?? true;
+    const burstSplats = options.burstSplats ?? 34;
+    const burstWaves = options.burstWaves ?? 8;
 
     let config = {
         SIM_RESOLUTION: 200,
@@ -760,8 +764,8 @@ export function fluidSimulation(canvas, options = {}) {
     initFramebuffers();
     // Strong entrance: a dense burst plus several rapid follow-up waves
     // (drained one-per-frame by input() via splatStack).
-    multipleSplats(34);
-    for (let i = 0; i < 8; i++)
+    multipleSplats(burstSplats);
+    for (let i = 0; i < burstWaves; i++)
         splatStack.push(10 + parseInt(Math.random() * 10));
 
     let lastColorChangeTime = Date.now();

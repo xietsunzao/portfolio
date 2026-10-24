@@ -1,14 +1,7 @@
-"use client"
-
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { Github, Linkedin, Mail } from "lucide-react"
 
 export function Footer() {
-  const pathname = usePathname()
-
-  if (pathname === "/") return null
-
   return (
     <footer className="border-t border-border">
       <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-muted-foreground sm:flex-row">

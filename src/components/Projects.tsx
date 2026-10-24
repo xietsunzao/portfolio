@@ -31,6 +31,7 @@ import {
 } from "react-icons/si"
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
+import { prefersReducedMotion } from "@/lib/utils"
 
 type TechIcon = {
   icon: React.ReactNode
@@ -47,7 +48,7 @@ type Project = {
   tech: TechIcon[]
 }
 
-const projects: Project[] = [
+export const projects: Project[] = [
   {
     title: "Dalfin Stenella Intelligent Care",
     description: "A comprehensive patient monitoring platform that integrates medical devices in real-time. The platform processes and presents diverse data needed by hospital stakeholders, and supports integration with a hospital's own SIMRS.",
@@ -165,35 +166,16 @@ export function Projects() {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power4.out" } })
+    if (prefersReducedMotion()) return
+    const tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 0.5 } })
 
-    // Entrance animation for title and cards
-    tl.fromTo(
-      titleRef.current,
-      { y: 100, opacity: 0 },
-      { 
-        y: 0, 
-        opacity: 1, 
-        duration: 1,
-        ease: "power4.inOut"
-      }
-    )
+    // Kept under ~1s total so a skimming visitor never waits on hidden cards.
+    tl.fromTo(titleRef.current, { y: 16, opacity: 0 }, { y: 0, opacity: 1 })
       .fromTo(
         cardsRef.current,
-        { 
-          opacity: 0,
-          y: 50,
-          scale: 0.95,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 1,
-          stagger: 0.2,
-          ease: "power4.inOut",
-        },
-        "-=0.5"
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, stagger: 0.05 },
+        "-=0.3"
       )
 
     return () => {

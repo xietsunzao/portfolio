@@ -84,12 +84,11 @@ export function Navbar() {
           <span className="text-sm sm:text-base">Jefri Maruli</span>
         </Link>
 
-        {/* Center glass pill nav */}
         <nav
           className={cn(
-            "absolute left-1/2 hidden h-11 -translate-x-1/2 items-center gap-6 rounded-full border px-6 backdrop-blur-md sm:flex sm:h-12 sm:gap-8 sm:px-7",
+            "absolute left-1/2 hidden h-11 -translate-x-1/2 items-center gap-6 border px-6 sm:flex sm:h-12 sm:gap-8 sm:px-7",
             overDarkHero
-              ? "border-white/[0.16] bg-white/[0.08]"
+              ? "border-white/[0.16] bg-[#04050c]/60"
               : "border-border bg-foreground/[0.04]"
           )}
         >
@@ -110,7 +109,7 @@ export function Navbar() {
                       ? "text-white/70 hover:text-white"
                       : "text-muted-foreground hover:text-foreground",
                   isActive &&
-                    "after:absolute after:-bottom-1 after:left-0 after:h-[3px] after:w-full after:rounded-full after:bg-brand after:content-['']"
+                    "after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-brand after:content-['']"
                 )}
               >
                 {item.name}
@@ -139,7 +138,7 @@ export function Navbar() {
               align="end"
               className={cn(
                 overDarkHero &&
-                  "border-white/[0.16] bg-[#0b0c14]/90 text-white backdrop-blur-md"
+                  "border-white/[0.16] bg-[#0b0c14] text-white"
               )}
             >
               {navigationItems.map((item) => {
@@ -171,7 +170,7 @@ export function Navbar() {
           <Button
             asChild
             className={cn(
-              "hidden h-9 rounded-full px-4 text-xs shadow-sm sm:inline-flex sm:h-10 sm:px-5 sm:text-sm",
+              "hidden h-9 px-4 text-xs sm:inline-flex sm:h-10 sm:px-5 sm:text-sm",
               overDarkHero && "bg-white text-[#2f2f33] hover:bg-white/85"
             )}
           >

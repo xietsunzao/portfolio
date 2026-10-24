@@ -30,6 +30,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { prefersReducedMotion } from "@/lib/utils";
 import { Calendar, Building2 } from "lucide-react";
 
 // Register ScrollTrigger plugin
@@ -137,7 +138,7 @@ const experiences = [
     company: "Kementerian Pekerjaan Umum dan Perumahan Rakyat",
     period: "Aug 2020 - Dec 2023",
     description:
-      "Developed and maintained Developed APIs to receive services from OSS and send processed data back to the OSS system, improving licensing workflow efficiency",
+      "Developed and maintained the APIs that receive licensing requests from the national OSS system and send processed results back to it.",
     technologies: [
       "PHP",
       "CodeIgniter",
@@ -192,85 +193,33 @@ export function About() {
   const timelineRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Bio section animation
-    gsap.fromTo(
-      bioRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: bioRef.current,
-          start: "top 80%",
-        },
-      }
-    );
+    if (prefersReducedMotion()) return;
 
-    // Tech stack title animation
-    gsap.fromTo(
-      techStackRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: techStackRef.current,
-          start: "top 80%",
-        },
+    // Short ease-out reveals; the bio starts in view, so it must not linger hidden.
+    const reveal = { opacity: 1, y: 0, x: 0, duration: 0.5, ease: "power3.out" };
+    const ctx = gsap.context(() => {
+      for (const el of [bioRef.current, techStackRef.current, experienceRef.current]) {
+        gsap.fromTo(el, { opacity: 0, y: 16 }, {
+          ...reveal,
+          scrollTrigger: { trigger: el, start: "top 85%" },
+        });
       }
-    );
-
-    // Cards stagger animation
-    gsap.fromTo(
-      cardsRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        scrollTrigger: {
-          trigger: cardsRef.current[0],
-          start: "top 80%",
-        },
-      }
-    );
-
-    // Experience title animation
-    gsap.fromTo(
-      experienceRef.current,
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: experienceRef.current,
-          start: "top 80%",
-        },
-      }
-    );
-
-    // Timeline items stagger animation
-    gsap.fromTo(
-      timelineRefs.current,
-      {
-        opacity: 0,
-        x: (index) => (index % 2 === 0 ? -50 : 50),
-      },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 1,
-        stagger: 0.3,
-        scrollTrigger: {
-          trigger: timelineRefs.current[0],
-          start: "top 80%",
-        },
-      }
-    );
+      gsap.fromTo(cardsRef.current, { opacity: 0, y: 16 }, {
+        ...reveal,
+        stagger: 0.06,
+        scrollTrigger: { trigger: cardsRef.current[0], start: "top 85%" },
+      });
+      gsap.fromTo(
+        timelineRefs.current,
+        { opacity: 0, x: (index) => (index % 2 === 0 ? -16 : 16) },
+        {
+          ...reveal,
+          stagger: 0.08,
+          scrollTrigger: { trigger: timelineRefs.current[0], start: "top 85%" },
+        }
+      );
+    });
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -281,17 +230,19 @@ export function About() {
         </h2>
 
         {/* Bio Section */}
-        <div ref={bioRef} className="max-w-3xl mx-auto mb-16 text-center">
-          <p className="text-xl text-muted-foreground mb-6">
-            I&apos;m a passionate full-stack developer with a keen eye for
-            design and a love for creating seamless user experiences. With
-            expertise in modern web technologies, I build scalable and efficient
-            applications that solve real-world problems.
+        <div ref={bioRef} className="max-w-2xl mx-auto mb-16 space-y-5 text-lg text-muted-foreground">
+          <p>
+            I&apos;m a full-stack developer, strongest on the backend. Since February 2025 I&apos;ve led backend work at Dalfin
+            HealthCare on Stenella, an ICU monitoring platform: NestJS services
+            that stream bedside device vitals to a live dashboard and hand them
+            to each hospital&apos;s own system through FHIR APIs.
           </p>
-          <p className="text-xl text-muted-foreground">
-            When I&apos;m not coding, you can find me exploring new
-            technologies, contributing to open-source projects, or sharing my
-            knowledge with the developer community.
+          <p>
+            Before that I spent three years at the Ministry of Public Works and
+            Housing building the APIs behind its building-permit licensing, and
+            a year at Melkhior Teknologi shipping NestJS and Laravel services.
+            I&apos;ve also mentored backend students on REST API design and
+            databases.
           </p>
         </div>
 
@@ -361,7 +312,7 @@ export function About() {
                 }}
               >
                 {/* Timeline dot */}
-                <div className="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-brand border-4 border-background" />
+                <div className="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-3 h-3 bg-brand border-2 border-background" />
 
                 {/* Content */}
                 <div
@@ -410,7 +361,7 @@ export function About() {
                         {experience.technologies.map((tech) => (
                           <span
                             key={tech}
-                            className="px-2 py-1 rounded-full bg-secondary text-secondary-foreground text-xs"
+                            className="px-2 py-1 bg-secondary text-secondary-foreground text-xs"
                           >
                             {tech}
                           </span>
