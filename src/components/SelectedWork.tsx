@@ -1,6 +1,4 @@
-"use client"
-
-import { projects } from "@/components/Projects"
+import { projects } from "@/data/projects"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
@@ -46,7 +44,7 @@ export function SelectedWork() {
             <h3 className="mt-2 text-2xl font-semibold">{featured.title}</h3>
             <p className="mt-3 text-muted-foreground">{featured.description}</p>
             <p className="mt-4 text-sm text-muted-foreground">
-              {featured.tech.map((t) => t.label).join(" · ")}
+              {featured.stack.join(" · ")}
             </p>
             {featured.caseStudy && (
               <Button asChild className="mt-6">
@@ -68,7 +66,7 @@ export function SelectedWork() {
                 <div>
                   <p className="text-muted-foreground">{project.description}</p>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    {project.tech.map((t) => t.label).join(" · ")}
+                    {project.stack.join(" · ")}
                   </p>
                 </div>
                 {href && (

@@ -32,6 +32,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { prefersReducedMotion } from "@/lib/utils";
 import { Calendar, Building2 } from "lucide-react";
+import { experience } from "@/data/experience";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -82,105 +83,6 @@ const techStack: TechGroup[] = [
       { name: "Figma", icon: <SiFigma className="h-6 w-6" /> },
       { name: "VS Code", icon: <VscVscode className="h-6 w-6" /> },
       { name: "Vercel", icon: <SiVercel className="h-6 w-6" /> },
-    ],
-  },
-];
-
-const experiences = [
-  {
-    title: "Senior Back End Developer",
-    company: "Dalfin HealthCare",
-    period: "Feb 2025 - Present",
-    description:
-      "Developed API MVP for Dalfin's IoMT ICU hospital digitalization platform, exposing FHIR-compliant RESTful APIs so hospitals can integrate patient data into their own SIMRS. Led backend team to ensure scalability across microservices architecture.",
-    technologies: [
-      "NestJS",
-      "TypeScript",
-      "Prisma",
-      "PostgreSQL",
-      "Docker",
-      "CI/CD",
-      "FHIR",
-      "HL7",
-      "Microservices",
-      "REST API",
-      "Git",
-    ],
-  },
-  {
-    title: "Full Stack Engineer",
-    company: "Melkhior Teknologi",
-    period: "Jan 2024 - Dec 2024",
-    description:
-      "Developed scalable web applications and microservices. Enhanced performance and reliability through CI/CD and Docker.",
-    technologies: [
-      "JavaScript",
-      "TypeScript",
-      "NestJS",
-      "Laravel",
-      "Bootstrap",
-      "MongoDB",
-      "Websocket",
-      "Docker",
-      "Microservices",
-      "Next.js",
-      "Tailwind CSS",
-      "React",
-      "Prisma",
-      "MySQL",
-      "Git",
-      "GitLab",
-      "CI/CD",
-    ],
-  },
-  {
-    title: "Back End Developer",
-    company: "Kementerian Pekerjaan Umum dan Perumahan Rakyat",
-    period: "Aug 2020 - Dec 2023",
-    description:
-      "Developed and maintained the APIs that receive licensing requests from the national OSS system and send processed results back to it.",
-    technologies: [
-      "PHP",
-      "CodeIgniter",
-      "OOP",
-      "REST API",
-      "MySQL",
-      "Git",
-      "GitLab",
-    ],
-  },
-  {
-    title: "Mentor Back End Developer",
-    company: "STMIK Mardira Indonesia",
-    period: "Oct 2023 - Feb 2023",
-    description:
-      "Mentor students in the Back End Developer program, helping them understand and implement RESTful APIs, database management, and server-side logic.",
-    technologies: [
-      "Backend",
-      "MySQL",
-      "PHP",
-      "OOP",
-      "REST API",
-      "Git",
-      "GitHub",
-      "Slack",
-    ],
-  },
-  {
-    title: "Mentor Programming",
-    company: "Creative Student Association",
-    period: "Sep 2019 - Dec 2020",
-    description:
-      "Mentored team in developing IoT-based Smart Presence System, created project-based learning modules for students",
-    technologies: [
-      "HTML/CSS",
-      "JavaScript",
-      "NodeJS",
-      "PHP",
-      "MySQL",
-      "Laravel",
-      "Git",
-      "GitHub",
     ],
   },
 ];
@@ -303,7 +205,7 @@ export function About() {
             <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 bg-border" />
 
             {/* Experience items */}
-            {experiences.map((experience, index) => (
+            {experience.map((role, index) => (
               <div
                 key={index}
                 className="relative grid grid-cols-1 md:grid-cols-2 gap-4 mb-8"
@@ -325,7 +227,7 @@ export function About() {
                       index % 2 === 0 ? "md:text-right" : "md:text-left"
                     }`}
                   >
-                    {experience.title}
+                    {role.title}
                   </h4>
                   <div
                     className={`flex items-center gap-2 text-muted-foreground mt-1 mb-2 ${
@@ -333,16 +235,18 @@ export function About() {
                     }`}
                   >
                     <Building2 className="h-4 w-4" />
-                    <span>{experience.company}</span>
+                    <span>{role.company}</span>
                   </div>
-                  <div
-                    className={`flex items-center gap-2 text-muted-foreground mb-3 ${
-                      index % 2 === 0 ? "justify-end" : ""
-                    }`}
-                  >
-                    <Calendar className="h-4 w-4" />
-                    <span>{experience.period}</span>
-                  </div>
+                  {role.period && (
+                    <div
+                      className={`flex items-center gap-2 text-muted-foreground mb-3 ${
+                        index % 2 === 0 ? "justify-end" : ""
+                      }`}
+                    >
+                      <Calendar className="h-4 w-4" />
+                      <span>{role.period}</span>
+                    </div>
+                  )}
                 </div>
 
                 <div
@@ -355,10 +259,10 @@ export function About() {
                   <Card>
                     <CardContent className="p-4">
                       <p className="text-muted-foreground mb-4">
-                        {experience.description}
+                        {role.description}
                       </p>
                       <div className="flex flex-wrap gap-2">
-                        {experience.technologies.map((tech) => (
+                        {role.stack.map((tech) => (
                           <span
                             key={tech}
                             className="px-2 py-1 bg-secondary text-secondary-foreground text-xs"
