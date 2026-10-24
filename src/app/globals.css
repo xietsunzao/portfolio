@@ -126,6 +126,13 @@
     border: 1.5px solid oklch(var(--foreground));
   }
 
+  .display-heading {
+    @apply text-balance text-[clamp(2.2rem,4.6vw,4.4rem)] font-bold leading-[1.03] tracking-[-0.025em];
+  }
+  .section-heading {
+    @apply mb-8 text-[clamp(1.6rem,2.8vw,2.4rem)] font-bold leading-[1.1] tracking-[-0.015em];
+  }
+
   .mono-label {
     @apply font-mono text-[0.78rem] leading-snug text-muted-foreground;
   }

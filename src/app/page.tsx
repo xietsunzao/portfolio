@@ -28,8 +28,7 @@ const tools = [
   "Next.js",
 ]
 
-const sectionHeading =
-  "spine-node mb-8 text-[clamp(1.6rem,2.8vw,2.4rem)] font-bold leading-[1.1] tracking-[-0.015em]"
+const sectionHeading = "spine-node section-heading"
 const sectionSpacing = "pt-[clamp(48px,7vw,104px)]"
 
 export default function Home(): React.JSX.Element {
@@ -37,7 +36,7 @@ export default function Home(): React.JSX.Element {
     <main id="main-content">
       <section className="page-column grid items-center gap-10 py-[clamp(40px,6vw,96px)] xl:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] xl:gap-16">
         <div>
-          <h1 className="text-balance text-[clamp(2.2rem,4.6vw,4.4rem)] font-bold leading-[1.03] tracking-[-0.025em]">
+          <h1 className="display-heading">
             I build the backends hospitals and ministries run on.
           </h1>
           <p className="mt-6 max-w-[44ch] text-[clamp(1rem,1.4vw,1.15rem)] leading-[1.6] text-muted-foreground">

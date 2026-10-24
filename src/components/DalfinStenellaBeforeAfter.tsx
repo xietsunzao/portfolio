@@ -1,6 +1,3 @@
-"use client"
-
-import { motion } from "framer-motion"
 import { Activity, LayoutDashboard, NotebookPen, User, Waves } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 
@@ -47,7 +44,7 @@ function Row({
   const gap = 220
   return (
     <g>
-      <text x={30} y={y - 44} className={tagMuted ? "fill-muted-foreground text-[11px] font-semibold uppercase tracking-wide" : "fill-brand text-[11px] font-semibold uppercase tracking-wide"}>
+      <text x={30} y={y - 44} className={tagMuted ? "fill-muted-foreground text-[12px] font-semibold" : "fill-foreground text-[12px] font-semibold"}>
         {tag}
       </text>
       {steps.map((step, i) => (
@@ -73,15 +70,11 @@ function Row({
 
 export function DalfinStenellaBeforeAfter() {
   return (
-    <motion.svg
+    <svg
       viewBox="0 0 800 300"
       className="h-auto w-full"
       role="img"
       aria-label="Before and after comparison: manual paper charting versus automated device integration"
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <defs>
         <marker id="ba-arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
@@ -114,6 +107,6 @@ export function DalfinStenellaBeforeAfter() {
           { icon: LayoutDashboard, label: "Dashboard" },
         ]}
       />
-    </motion.svg>
+    </svg>
   )
 }

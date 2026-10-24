@@ -1,6 +1,3 @@
-"use client"
-
-import { motion } from "framer-motion"
 import {
   Activity,
   Building2,
@@ -76,16 +73,23 @@ function Person({ cx, cy, label, sublabel }: { cx: number; cy: number; label: st
 
 function GroupLabel({ x, y, label }: { x: number; y: number; label: string }) {
   return (
-    <text x={x} y={y} className="fill-muted-foreground text-[11px] font-medium uppercase tracking-wide">
+    <text x={x} y={y} className="fill-muted-foreground text-[11px] font-medium">
       {label}
     </text>
   )
 }
 
+// Same rhythm as the home page map. Three passes, then rest until the pointer enters the diagram.
 function FlowDot({ pathId, duration = 2.4, delay = 0 }: { pathId: string; duration?: number; delay?: number }) {
   return (
-    <circle r={3} className="fill-brand">
-      <animateMotion dur={`${duration}s`} begin={`${delay}s`} repeatCount="indefinite">
+    <circle r={3} className="fill-brand motion-reduce:hidden">
+      <animateMotion
+        dur={`${duration}s`}
+        begin={`${delay}s;c4Diagram.mouseover`}
+        repeatCount="3"
+        restart="whenNotActive"
+        fill="freeze"
+      >
         <mpath href={`#${pathId}`} />
       </animateMotion>
     </circle>
@@ -121,11 +125,10 @@ function Arrow({
         strokeWidth={1.5}
         strokeDasharray={cloudSync ? "5 4" : undefined}
         markerEnd="url(#arrowhead)"
-        style={cloudSync ? { animation: "dash-flow 1.2s linear infinite" } : undefined}
       />
       {live && id && <FlowDot pathId={id} delay={liveDelay} />}
       {label && (
-        <text x={labelX} y={labelY} textAnchor="middle" className={cloudSync ? "fill-brand text-[10px]" : "fill-muted-foreground text-[10px]"}>
+        <text x={labelX} y={labelY} textAnchor="middle" className="fill-muted-foreground text-[10px]">
           {label}
         </text>
       )}
@@ -146,30 +149,26 @@ function LegendItem({ x, y, children, swatch }: { x: number; y: number; children
 
 export function DalfinStenellaArchitecture() {
   return (
-    <motion.svg
+    <svg
+      id="c4Diagram"
       viewBox="0 0 1080 730"
       className="h-auto w-full"
       role="img"
       aria-label="Stenella Care platform container diagram, C4 model level 2"
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <defs>
         <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
           <path d="M0,0 L8,4 L0,8 Z" className="fill-muted-foreground" />
         </marker>
-        <style>{`@keyframes dash-flow { to { stroke-dashoffset: -18; } }`}</style>
       </defs>
 
       <text x={140} y={26} className="fill-foreground text-[13px] font-semibold">
-        Stenella Care Platform — Container diagram (C4, level 2)
+        Stenella Care platform, container diagram (C4 level 2)
       </text>
 
       {/* Hospital site group */}
       <rect x={140} y={60} width={620} height={430} className="fill-transparent stroke-border" strokeWidth={1} strokeDasharray="3 4" />
-      <GroupLabel x={160} y={50} label="Hospital site — on-premises" />
+      <GroupLabel x={160} y={50} label="Hospital site, on-premises" />
 
       <Box x={180} y={100} w={230} h={60} icon={Activity} label="Medical devices" sublabel="patient monitor, pump, ventilator" />
       <Box x={180} y={220} w={230} h={50} icon={Waypoints} label="Message broker" sublabel="device vitals queue" />
@@ -185,20 +184,20 @@ export function DalfinStenellaArchitecture() {
 
       <Box x={840} y={100} w={210} h={60} icon={KeyRound} label="License / contract API" sublabel="30-day offline grace period" accent />
 
-      {/* External system — the hospital's own SIMRS, not ours to run or host */}
+      {/* External system: the hospital's own SIMRS, not ours to run or host */}
       <Box x={840} y={210} w={210} h={60} icon={Building2} label="SIMRS" sublabel="hospital's own management system" />
 
-      {/* Deployment artifact — not part of either running system */}
+      {/* Deployment artifact, not part of either running system */}
       <Box x={840} y={380} w={210} h={50} icon={Download} label="Desktop installer" sublabel="ships the stack to hospital IT" />
 
-      {/* On-prem real-time pipeline — animated flow dots */}
+      {/* On-prem real-time pipeline with animated flow dots */}
       <Arrow id="flow-1" d="M295,160 V220" live liveDelay={0} />
       <Arrow id="flow-2" d="M295,270 V330" live liveDelay={0.5} />
       <Arrow id="flow-3" d="M295,380 V425" live liveDelay={1} />
       <Arrow id="flow-4" d="M410,355 H500" label="live vitals" labelX={455} labelY={345} live liveDelay={1.5} />
       <Arrow d="M615,160 V325" label="auth, API calls" labelX={665} labelY={245} />
 
-      {/* External sync — periodic, not continuous */}
+      {/* External sync, periodic rather than continuous */}
       <Arrow d="M730,130 H840" label="validate license" labelX={785} labelY={120} cloudSync />
       <Arrow d="M730,150 H780 V240 H840" label="patient data sync" labelX={745} labelY={200} cloudSync />
 
@@ -244,6 +243,6 @@ export function DalfinStenellaArchitecture() {
           Actor
         </LegendItem>
       </g>
-    </motion.svg>
+    </svg>
   )
 }
