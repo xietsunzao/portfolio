@@ -1,72 +1,25 @@
 "use client"
 
-import * as React from "react"
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { cn } from "@/lib/utils"
-import { Menu } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { ThemeToggle } from "@/components/ThemeToggle"
 
-const navigationItems = [
-  { name: "Home", href: "/" },
-  { name: "Projects", href: "/projects" },
-  { name: "About", href: "/about" },
-]
+const links = [
+  { name: "Work", href: "/#work" },
+  { name: "About", href: "/#about" },
+  { name: "Contact", href: "/#contact" },
+] as const
 
-function isNavItemActive(href: string, pathname: string) {
-  return href === "/" ? pathname === "/" : pathname.startsWith(href)
-}
-
-export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false)
+export function Navbar(): React.JSX.Element {
   const pathname = usePathname()
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  // The homepage hero is a full-bleed, always-dark WebGL canvas the nav floats
-  // over (no solid backing) until scrolled past it — everywhere else the nav
-  // sits on the site's own light/dark themed background.
-  const overDarkHero = pathname === "/" && !isScrolled
+  // No scroll-spy on the home page; Work is marked only while inside the projects pages.
+  const inProjects = pathname.startsWith("/projects")
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 w-full transition-colors duration-300",
-        isScrolled
-          ? "border-b bg-background/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-background/60"
-          : "border-b border-transparent bg-transparent"
-      )}
-    >
-      <div className="container relative mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
-        {/* Brand */}
-        <Link
-          href="/"
-          className={cn(
-            "flex items-center gap-2 font-medium tracking-tight transition-opacity hover:opacity-80",
-            overDarkHero ? "text-white" : "text-foreground"
-          )}
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden="true"
-            className="h-5 w-5 sm:h-6 sm:w-6"
-          >
+    <header className="border-b border-border">
+      <div className="page-column flex items-center justify-between gap-4 py-1.5">
+        <Link href="/" className="flex items-center gap-2.5 py-2.5 font-bold">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="hidden h-6 w-6 min-[400px]:block">
             <path
               d="M2.5 9c2.5 0 2.5 4.2 5 4.2S10 9 12 9s2.5 4.2 5 4.2S19.5 9 21.5 9"
               stroke="currentColor"
@@ -81,102 +34,26 @@ export function Navbar() {
               opacity="0.5"
             />
           </svg>
-          <span className="text-sm sm:text-base">Jefri Maruli</span>
+          <span>Jefri Maruli</span>
         </Link>
-
-        <nav
-          className={cn(
-            "absolute left-1/2 hidden h-11 -translate-x-1/2 items-center gap-6 border px-6 sm:flex sm:h-12 sm:gap-8 sm:px-7",
-            overDarkHero
-              ? "border-white/[0.16] bg-[#04050c]/60"
-              : "border-border bg-foreground/[0.04]"
-          )}
-        >
-          {navigationItems.map((item) => {
-            const isActive = isNavItemActive(item.href, pathname)
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                aria-current={isActive ? "page" : undefined}
-                className={cn(
-                  "relative whitespace-nowrap text-sm transition-colors",
-                  isActive
-                    ? overDarkHero
-                      ? "text-white"
-                      : "text-foreground"
-                    : overDarkHero
-                      ? "text-white/70 hover:text-white"
-                      : "text-muted-foreground hover:text-foreground",
-                  isActive &&
-                    "after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-brand after:content-['']"
-                )}
-              >
-                {item.name}
-              </Link>
-            )
-          })}
+        <nav aria-label="Main">
+          <ul className="flex items-center gap-x-4 sm:gap-x-8">
+            {links.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  aria-current={link.name === "Work" && inProjects ? "true" : undefined}
+                  className="nav-link"
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <ThemeToggle />
+            </li>
+          </ul>
         </nav>
-
-        {/* CTA */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Open menu"
-                className={cn(
-                  "sm:hidden",
-                  overDarkHero && "text-white hover:bg-white/10 hover:text-white"
-                )}
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              className={cn(
-                overDarkHero &&
-                  "border-white/[0.16] bg-[#0b0c14] text-white"
-              )}
-            >
-              {navigationItems.map((item) => {
-                const isActive = isNavItemActive(item.href, pathname)
-                return (
-                  <DropdownMenuItem
-                    key={item.name}
-                    asChild
-                    className={cn(
-                      isActive && "text-brand focus:text-brand",
-                      overDarkHero && "focus:bg-white/10"
-                    )}
-                  >
-                    <Link href={item.href} aria-current={isActive ? "page" : undefined}>
-                      {item.name}
-                    </Link>
-                  </DropdownMenuItem>
-                )
-              })}
-              <DropdownMenuSeparator className={cn(overDarkHero && "bg-white/[0.16]")} />
-              <DropdownMenuItem
-                asChild
-                className={cn("font-medium", overDarkHero && "focus:bg-white/10")}
-              >
-                <Link href="mailto:jefrimaruli@gmail.com">Get In Touch</Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Button
-            asChild
-            className={cn(
-              "hidden h-9 px-4 text-xs sm:inline-flex sm:h-10 sm:px-5 sm:text-sm",
-              overDarkHero && "bg-white text-[#2f2f33] hover:bg-white/85"
-            )}
-          >
-            <Link href="mailto:jefrimaruli@gmail.com">Get In Touch</Link>
-          </Button>
-        </div>
       </div>
     </header>
   )

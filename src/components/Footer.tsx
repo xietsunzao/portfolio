@@ -1,36 +1,23 @@
-import Link from "next/link"
-import { Github, Linkedin, Mail } from "lucide-react"
+const links = [
+  { name: "Email", href: "mailto:jefrimaruli@gmail.com" },
+  { name: "GitHub", href: "https://github.com/xietsunzao" },
+  { name: "LinkedIn", href: "https://linkedin.com/in/jefri-maruli" },
+] as const
 
-export function Footer() {
+export function Footer(): React.JSX.Element {
   return (
     <footer className="border-t border-border">
-      <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-muted-foreground sm:flex-row">
-        <p>© 2026 Jefri Maruli. All rights reserved.</p>
-        <div className="flex items-center gap-5">
-          <Link
-            href="https://github.com/xietsunzao"
-            target="_blank"
-            className="transition-colors hover:text-brand"
-            aria-label="GitHub"
-          >
-            <Github className="h-4 w-4" />
-          </Link>
-          <Link
-            href="https://linkedin.com/in/jefri-maruli"
-            target="_blank"
-            className="transition-colors hover:text-brand"
-            aria-label="LinkedIn"
-          >
-            <Linkedin className="h-4 w-4" />
-          </Link>
-          <Link
-            href="mailto:jefrimaruli@gmail.com"
-            className="transition-colors hover:text-brand"
-            aria-label="Email"
-          >
-            <Mail className="h-4 w-4" />
-          </Link>
-        </div>
+      <div className="page-column flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-4 text-sm text-muted-foreground">
+        <p>© {new Date().getFullYear()} Jefri Maruli</p>
+        <ul className="flex gap-x-6">
+          {links.map((link) => (
+            <li key={link.name}>
+              <a href={link.href} className="nav-link">
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </footer>
   )

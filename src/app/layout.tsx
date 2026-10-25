@@ -1,37 +1,36 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Hanken_Grotesk, Martian_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import { RouteTransition } from "@/components/RouteTransition";
 import { Footer } from "@/components/Footer";
+import { siteUrl } from "@/lib/site";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const sans = Hanken_Grotesk({
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// The wdth axis lets labels run condensed (fontFamily.mono in tailwind.config.ts).
+const mono = Martian_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
+  axes: ["wdth"],
 });
 
 export const metadata: Metadata = {
-  title: "Jefri Maruli — Full-Stack Developer",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Jefri Maruli, senior backend developer",
+    template: "%s | Jefri Maruli",
+  },
   description:
-    "Portfolio of Jefri Maruli, a full-stack developer building fast, thoughtful web experiences from idea to deploy.",
-  openGraph: {
-    title: "Jefri Maruli — Full-Stack Developer",
-    description:
-      "Portfolio of Jefri Maruli, a full-stack developer building fast, thoughtful web experiences from idea to deploy.",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Jefri Maruli — Full-Stack Developer",
-    description:
-      "Portfolio of Jefri Maruli, a full-stack developer building fast, thoughtful web experiences from idea to deploy.",
-  },
+    "I build the backends hospitals and ministries run on. Senior backend developer at Dalfin HealthCare, working on the Stenella ICU monitoring platform.",
+  // Left without a title or description, which every page would inherit. Next fills in
+  // each page's own instead.
+  openGraph: { type: "website", siteName: "Jefri Maruli" },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({
@@ -39,21 +38,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Font variables sit on <html> because Tailwind's preflight sets font-family there.
   return (
-    <html lang="en" suppressHydrationWarning className="scroll-smooth">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${sans.variable} ${mono.variable} scroll-smooth`}
+    >
+      <body className="antialiased">
         <a
           href="#main-content"
-          className="fixed left-4 top-4 z-[200] -translate-y-20 rounded-md bg-brand px-4 py-2 text-sm font-medium text-brand-foreground transition-transform focus:translate-y-0"
+          className="fixed left-4 top-4 z-[200] -translate-y-20 bg-foreground px-4 py-2 text-sm font-medium text-background transition-transform focus:translate-y-0"
         >
           Skip to content
         </a>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
+          defaultTheme="system"
+          enableSystem
           disableTransitionOnChange
         >
           <Navbar />
