@@ -1,19 +1,23 @@
+import type { Metadata } from "next"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 
-export default function NotFound() {
+export const metadata: Metadata = { title: "Page not found" }
+
+export default function NotFound(): React.JSX.Element {
   return (
-    <main className="flex min-h-[100dvh] flex-col items-center justify-center gap-4 px-4 text-center">
-      <p className="text-sm font-medium text-brand">404</p>
-      <h1 className="text-balance text-3xl font-bold tracking-tighter sm:text-5xl">
-        This page doesn&apos;t exist
-      </h1>
-      <p className="max-w-md text-muted-foreground">
-        The page you&apos;re looking for was moved, renamed, or never existed.
-      </p>
-      <Button asChild className="mt-4">
-        <Link href="/">Back to home</Link>
-      </Button>
+    <main id="main-content" className="page-column">
+      <div className="spine py-[clamp(64px,10vw,140px)]">
+        <p className="mono-label">404</p>
+        <h1 className="spine-node display-heading mt-2">This page doesn&apos;t exist.</h1>
+        <div className="mt-8 flex flex-wrap gap-x-6">
+          <Link href="/" className="pencil-link">
+            Go to the home page
+          </Link>
+          <Link href="/projects" className="pencil-link">
+            All projects
+          </Link>
+        </div>
+      </div>
     </main>
   )
 }

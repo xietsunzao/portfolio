@@ -1,108 +1,64 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { usePathname, useRouter } from "next/navigation"
-import { fluidSimulation } from "@/lib/fluidSimulation"
-import { cn, prefersReducedMotion } from "@/lib/utils"
+import { useEffect, useState } from "react"
+import { usePathname } from "next/navigation"
+import { prefersReducedMotion } from "@/lib/utils"
 
-// Lives once in the root layout (never remounted per page) so it can cover
-// the screen the instant a nav link is clicked and only reveal the
-// destination once it has actually mounted underneath — rather than
-// flashing the new page first and covering it afterward. Reuses the hero's
-// own fluid engine/palette so the burst reads as the same effect, not a
-// separate theme. Only ever triggers from an intercepted internal link
-// click, so a hard reload never plays it. The cover itself fades in and out
-// (not an instant pop) — fade-out is guaranteed to wait until the fade-in
-// has fully finished, even on a near-instant navigation, so a fast route
-// change can never interrupt it mid-fade.
-const FADE_DURATION_MS = 450
-const REVEAL_HOLD_MS = 150
+type Phase = "idle" | "loading" | "done"
 
-export function RouteTransition() {
+// Transform and opacity only, so the line never triggers layout.
+const phaseStyle: Record<Phase, React.CSSProperties> = {
+  idle: { transform: "scaleX(0)", opacity: 0 },
+  loading: {
+    transform: "scaleX(0.8)",
+    opacity: 1,
+    transition: "transform 2s cubic-bezier(0.16, 1, 0.3, 1)",
+  },
+  done: {
+    transform: "scaleX(1)",
+    opacity: 0,
+    transition: "transform 200ms cubic-bezier(0.25, 1, 0.5, 1), opacity 250ms ease-out 150ms",
+  },
+}
+
+// A 2px vermilion line across the top while an internal navigation is in flight.
+export function RouteTransition(): React.JSX.Element {
   const pathname = usePathname()
-  const router = useRouter()
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const destroyRef = useRef<(() => void) | null>(null)
-  const prevPathnameRef = useRef(pathname)
-  const coverStartRef = useRef(0)
-  const [covering, setCovering] = useState(false)
-  const [visible, setVisible] = useState(false)
+  const [phase, setPhase] = useState<Phase>("idle")
 
   useEffect(() => {
-    const onClick = (e: MouseEvent) => {
-      if (e.defaultPrevented || e.button !== 0) return
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
-      const anchor = (e.target as HTMLElement)?.closest?.("a")
-      if (!anchor) return
-      if (anchor.target === "_blank") return
-      const href = anchor.getAttribute("href")
-      if (!href || !href.startsWith("/") || href === pathname) return
+    const onClick = (event: MouseEvent): void => {
+      if (event.defaultPrevented || event.button !== 0) return
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+      const anchor = event.target instanceof Element ? event.target.closest("a") : null
+      if (!(anchor instanceof HTMLAnchorElement) || anchor.target === "_blank") return
+      const url = new URL(anchor.href)
+      // A same-page hash link never changes the pathname, so the line would never finish.
+      if (url.origin !== window.location.origin || url.pathname === window.location.pathname) return
       if (prefersReducedMotion()) return
-
-      e.preventDefault()
-      coverStartRef.current = performance.now()
-      setCovering(true)
-      router.push(href)
+      setPhase("loading")
     }
 
     document.addEventListener("click", onClick, true)
     return () => document.removeEventListener("click", onClick, true)
-  }, [pathname, router])
+  }, [])
 
-  // Mount/run the fluid burst, then fade the cover smoothly into view
-  // (rather than popping straight to full opacity).
   useEffect(() => {
-    if (!covering || !canvasRef.current) return
-    destroyRef.current = fluidSimulation(canvasRef.current, {
-      orbit: false,
-      config: { DENSITY_DISSIPATION: 0.93, CURL: 34, SPLAT_RADIUS: 0.28 },
-    })
-    setVisible(false)
-    const raf = requestAnimationFrame(() => {
-      requestAnimationFrame(() => setVisible(true))
-    })
-    return () => {
-      cancelAnimationFrame(raf)
-      destroyRef.current?.()
-      destroyRef.current = null
-    }
-  }, [covering])
+    setPhase((current) => (current === "loading" ? "done" : current))
+  }, [pathname])
 
-  // Once the new page has actually mounted (pathname changed), fade back
-  // out — but never before the fade-in itself has had time to complete.
   useEffect(() => {
-    if (prevPathnameRef.current === pathname) return
-    prevPathnameRef.current = pathname
-    if (!covering) return
-
-    const elapsedSinceCoverStart = performance.now() - coverStartRef.current
-    const fadeOutDelay =
-      Math.max(0, FADE_DURATION_MS - elapsedSinceCoverStart) + REVEAL_HOLD_MS
-
-    const fadeOutTimer = setTimeout(() => setVisible(false), fadeOutDelay)
-    const cleanupTimer = setTimeout(
-      () => setCovering(false),
-      fadeOutDelay + FADE_DURATION_MS + 50
-    )
-    return () => {
-      clearTimeout(fadeOutTimer)
-      clearTimeout(cleanupTimer)
-    }
-  }, [pathname, covering])
-
-  if (!covering) return null
+    if (phase === "idle") return
+    // "done" clears after its fade; "loading" clears after 10s in case the navigation never lands.
+    const timer = setTimeout(() => setPhase("idle"), phase === "done" ? 400 : 10_000)
+    return () => clearTimeout(timer)
+  }, [phase])
 
   return (
-    <canvas
-      ref={canvasRef}
+    <div
       aria-hidden="true"
-      className={cn(
-        "pointer-events-none fixed inset-0 z-[100] h-full w-full bg-[#04050c] opacity-0",
-        visible && "opacity-100"
-      )}
-      style={{
-        transition: `opacity ${FADE_DURATION_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`,
-      }}
+      className="pointer-events-none fixed inset-x-0 top-0 z-[100] h-[2px] origin-left bg-brand"
+      style={phaseStyle[phase]}
     />
   )
 }
