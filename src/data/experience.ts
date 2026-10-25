@@ -29,6 +29,14 @@ export const experience: readonly Role[] = [
     ],
   },
   {
+    title: "Back End Engineer (Contract)",
+    company: "Not Boring Company",
+    period: "Aug 2025 - Jul 2026",
+    description:
+      "Designed and built the Go microservices behind a real-time multiplayer game, with gRPC and Protocol Buffers between services. Built Rust automation bots that manage wallets with secp256k1 keys and BIP39/BIP32 derivation, and Redis caching that cut database reads during peak gameplay.",
+    stack: ["Go", "gRPC", "Protocol Buffers", "Rust", "Tokio", "SQLx", "PostgreSQL", "Redis", "TypeScript"],
+  },
+  {
     title: "Full Stack Engineer",
     company: "Melkhior Teknologi",
     period: "Jan 2024 - Dec 2024",
