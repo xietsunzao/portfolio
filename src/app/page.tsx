@@ -36,10 +36,14 @@ const tools = [
   "NestJS",
   "Node.js",
   "TypeScript",
+  "Go",
+  "Rust",
+  "gRPC",
   "PostgreSQL",
   "Prisma",
   "MySQL",
   "MongoDB",
+  "Redis",
   "Laravel",
   "Docker",
   "React",
@@ -183,7 +187,9 @@ export default function Home(): React.JSX.Element {
                 <p>
                   I&apos;m a full-stack developer, strongest on the backend. Since February 2025
                   I&apos;ve led backend work at Dalfin HealthCare on Stenella, an ICU monitoring
-                  platform.
+                  platform. From August 2025 to July 2026 I also worked on contract for Not Boring
+                  Company in Singapore, building the Go microservices and Rust wallet bots behind a
+                  real-time multiplayer Web3 game.
                 </p>
                 <p>
                   Before that I spent three years at the Ministry of Public Works and Housing
