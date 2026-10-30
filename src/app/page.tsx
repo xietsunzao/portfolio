@@ -203,14 +203,14 @@ export default function Home(): React.JSX.Element {
 
           <section id="contact" className={`${sectionSpacing} pb-[clamp(56px,8vw,104px)]`}>
             <h2 className={sectionHeading}>Contact</h2>
-            <p className="text-muted-foreground">Email is the fastest way to reach me.</p>
             <a
               href="mailto:jefrimaruli@gmail.com"
-              className="mt-3 inline-block border-b-[3px] border-brand text-[clamp(1.5rem,4vw,3.4rem)] font-bold leading-[1.15] tracking-[-0.02em] [overflow-wrap:anywhere] hover:border-foreground"
+              className="inline-block border-b-[3px] border-brand text-[clamp(1.5rem,4vw,3.4rem)] font-bold leading-[1.15] tracking-[-0.02em] [overflow-wrap:anywhere] hover:border-foreground"
             >
               jefrimaruli@gmail.com
             </a>
-            <div className="mt-6 flex flex-wrap gap-x-6">
+            <p className="mt-4 text-muted-foreground">Email is the fastest way to reach me.</p>
+            <div className="mt-3 flex flex-wrap gap-x-6">
               <a href={github} className="pencil-link">
                 GitHub
               </a>

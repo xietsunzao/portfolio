@@ -29,9 +29,9 @@ async function googleFont(family: string, axes: string, text: string): Promise<A
 }
 
 export default async function OpenGraphImage(): Promise<ImageResponse> {
-  const [sans, mono] = await Promise.all([
+  const [bold, regular] = await Promise.all([
     googleFont("Hanken+Grotesk", "wght@700", headline.join("")),
-    googleFont("Martian+Mono", "wdth,wght@87.5,400", label + domain),
+    googleFont("Hanken+Grotesk", "wght@400", label + domain),
   ])
 
   return new ImageResponse(
@@ -48,7 +48,7 @@ export default async function OpenGraphImage(): Promise<ImageResponse> {
           }}
         >
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ fontFamily: "Martian Mono", fontSize: 24, color: graphite }}>{label}</div>
+            <div style={{ fontFamily: "Hanken Grotesk", fontWeight: 400, fontSize: 26, color: graphite }}>{label}</div>
             <div
               style={{
                 position: "relative",
@@ -56,6 +56,7 @@ export default async function OpenGraphImage(): Promise<ImageResponse> {
                 flexDirection: "column",
                 marginTop: 20,
                 fontFamily: "Hanken Grotesk",
+                fontWeight: 700,
                 fontSize: 96,
                 lineHeight: 1.04,
                 letterSpacing: -2.4,
@@ -79,7 +80,7 @@ export default async function OpenGraphImage(): Promise<ImageResponse> {
             </div>
           </div>
           <div style={{ display: "flex" }}>
-            <div style={{ fontFamily: "Martian Mono", fontSize: 26, paddingBottom: 6, borderBottom: `4px solid ${vermilion}` }}>
+            <div style={{ fontFamily: "Hanken Grotesk", fontWeight: 400, fontSize: 28, paddingBottom: 6, borderBottom: `4px solid ${vermilion}` }}>
               {domain}
             </div>
           </div>
@@ -89,8 +90,8 @@ export default async function OpenGraphImage(): Promise<ImageResponse> {
     {
       ...size,
       fonts: [
-        { name: "Hanken Grotesk", data: sans, weight: 700, style: "normal" },
-        { name: "Martian Mono", data: mono, weight: 400, style: "normal" },
+        { name: "Hanken Grotesk", data: bold, weight: 700, style: "normal" },
+        { name: "Hanken Grotesk", data: regular, weight: 400, style: "normal" },
       ],
     },
   )
