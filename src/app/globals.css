@@ -129,6 +129,10 @@
   .display-heading {
     @apply text-balance text-[clamp(2.2rem,4.6vw,4.4rem)] font-bold leading-[1.03] tracking-[-0.025em];
   }
+  /* Home page only: the 38-character line takes two lines at 1440. */
+  .hero-heading {
+    @apply text-balance text-[clamp(2.25rem,9.6vw,8rem)] font-bold leading-[0.96] tracking-[-0.035em];
+  }
   .section-heading {
     @apply mb-8 text-[clamp(1.6rem,2.8vw,2.4rem)] font-bold leading-[1.1] tracking-[-0.015em];
   }

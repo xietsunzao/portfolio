@@ -61,16 +61,14 @@ export default function Home(): React.JSX.Element {
         // Escaping "<" stops a string in the data from closing the script tag.
         dangerouslySetInnerHTML={{ __html: JSON.stringify(person).replace(/</g, "\\u003c") }}
       />
-      <section className="page-column grid items-center gap-10 py-[clamp(40px,6vw,96px)] xl:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] xl:gap-16">
-        <div>
-          <h1 className="display-heading">
-            I build the backends hospitals and ministries run on.
-          </h1>
-          <p className="mt-6 max-w-[44ch] text-[clamp(1rem,1.4vw,1.15rem)] leading-[1.6] text-muted-foreground">
-            Jefri Maruli, senior backend developer at Dalfin HealthCare. The map shows the ICU
-            platform I work on, simplified.
+      <section className="page-column pb-[clamp(48px,6vw,88px)] pt-[clamp(40px,7vw,112px)]">
+        <h1 className="hero-heading">I build the backends hospitals run on.</h1>
+        <div className="mt-[clamp(28px,3vw,44px)] flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
+          <p className="max-w-[46ch] text-[clamp(1.125rem,1.5vw,1.35rem)] leading-[1.5]">
+            Jefri Maruli, senior backend developer at Dalfin HealthCare. The map below shows the
+            ICU platform I work on, simplified.
           </p>
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
             <Link
               href="/projects/dalfin-stenella"
               className="inline-flex min-h-12 items-center bg-primary px-5 py-3 font-semibold text-primary-foreground hover:bg-primary/90"
@@ -82,11 +80,11 @@ export default function Home(): React.JSX.Element {
             </Link>
           </div>
         </div>
-        <SystemsMap />
       </section>
 
       <div className="page-column">
         <div className="spine">
+          <SystemsMap />
           <section id="work" className={sectionSpacing}>
             <h2 className={sectionHeading}>Work</h2>
 

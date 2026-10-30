@@ -1,7 +1,6 @@
 import { ImageResponse } from "next/og"
 
-export const alt =
-  "I build the backends hospitals and ministries run on. Jefri Maruli, senior backend developer."
+export const alt = "I build the backends hospitals run on. Jefri Maruli, senior backend developer."
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
@@ -13,7 +12,7 @@ const hairline = "#cdcac3"
 const vermilion = "#da4620"
 
 // Fixed breaks, because Satori can't balance lines and "run on." would sit alone.
-const headline = ["I build the backends", "hospitals and", "ministries run on."]
+const headline = ["I build the backends", "hospitals run on."]
 const label = "Jefri Maruli · Senior backend developer"
 const domain = "jefrimaruli.dev"
 
