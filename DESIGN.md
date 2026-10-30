@@ -15,6 +15,12 @@ colors:
   wash-dark: "oklch(0.25 0.008 90)"
   vermilion-dark: "oklch(0.7 0.17 38)"
 typography:
+  hero:
+    fontFamily: "Hanken Grotesk, system-ui, sans-serif"
+    fontSize: "clamp(2.25rem, 9.6vw, 8rem)"
+    fontWeight: 700
+    lineHeight: 0.96
+    letterSpacing: "-0.035em"
   display:
     fontFamily: "Hanken Grotesk, system-ui, sans-serif"
     fontSize: "clamp(2.2rem, 4.6vw, 4.4rem)"
@@ -40,10 +46,16 @@ typography:
     lineHeight: 1.65
     letterSpacing: "normal"
   label:
-    fontFamily: "Martian Mono, ui-monospace, monospace"
-    fontSize: "0.78rem"
+    fontFamily: "Hanken Grotesk, system-ui, sans-serif"
+    fontSize: "0.875rem"
     fontWeight: 400
-    lineHeight: 1.4
+    lineHeight: 1.375
+    letterSpacing: "normal"
+  diagram:
+    fontFamily: "Martian Mono, ui-monospace, monospace"
+    fontSize: "14.5px"
+    fontWeight: 400
+    lineHeight: 1
     letterSpacing: "normal"
 rounded:
   none: "0px"
@@ -67,7 +79,7 @@ components:
 
 **Creative North Star: "The Systems Map"**
 
-The site reads as one technical drawing. The hero is a live map of the Stenella platform, drawn from the containers in its C4 diagram, and a single line, the spine, carries on down the page so every section hangs off the same drawing. Ink does the work. Vermilion is the red pencil that marks what matters. References: red pencil on tracing paper, Beck's Tube map, C4 container diagrams.
+The site reads as one technical drawing. The hero is a two-line statement. Below it, a held scroll scene follows one heart-rate reading through the Stenella platform's C4 levels, drawn from its real container diagram. A single line, the spine, carries on down the page so every section hangs off the same drawing. Ink does the work. Vermilion is the red pencil that marks what matters. References: red pencil on tracing paper, Beck's Tube map, C4 container and dynamic diagrams.
 
 The page is calm and spacious, with wide gutters, paragraphs capped at 60ch, and sections separated by space and hairlines instead of boxes. The anti-references in PRODUCT.md apply in full. No hero-metric cards, no purple-gradient-on-black "AI startup" aesthetic, no identical three-card feature grids, no gradient text, and none of the polished-but-soulless corporate agency portfolio feel.
 
@@ -75,8 +87,8 @@ The page is calm and spacious, with wide gutters, paragraphs capped at 60ch, and
 - Light first. Dark follows the OS setting and has a toggle.
 - Zero border-radius everywhere.
 - Flat. No shadows, no blur, no cards around content.
-- Mono only for labels, dates and stacks.
-- Antislop dials ENERGY 2, RHYTHM 3, MOTION 2.
+- Mono only inside diagrams.
+- Antislop dials ENERGY 2, RHYTHM 3, MOTION 3. Motion went from 2 to 3 when the home page gained its held scene.
 
 ## 2. Colors
 
@@ -85,7 +97,7 @@ Warm paper and ink with one red-pencil accent. The values live in `src/app/globa
 Measured contrast against the ground (light / dark): ink 14.99 / 14.78, graphite 6.33 / 7.28, vermilion 4.01 / 6.34, hairline 1.53 / 1.54. On wash, ink measures 13.49 / 13.12 and graphite 5.70 / 6.46.
 
 ### Primary
-- **Vermilion** (oklch(0.6 0.19 35) / oklch(0.7 0.17 38)): map packets, link underlines, the current-page bar, the focus ring. Tokens `--brand` and `--ring`.
+- **Vermilion** (oklch(0.6 0.19 35) / oklch(0.7 0.17 38)): the reading's route, its dots and hop rings, the boxes it lights, link underlines, the current-page bar, the focus ring. Tokens `--brand` and `--ring`.
 
 ### Neutral
 - **Paper** (oklch(0.975 0.007 90) / oklch(0.2 0.008 90)): the page and anything that sits on it. `--background`, `--card`, `--popover`.
@@ -103,19 +115,21 @@ Measured contrast against the ground (light / dark): ink 14.99 / 14.78, graphite
 
 **Display Font:** Hanken Grotesk (with system-ui)
 **Body Font:** Hanken Grotesk (with system-ui)
-**Label/Mono Font:** Martian Mono at 87.5% width (with ui-monospace)
+**Diagram Font:** Martian Mono at 87.5% width (with ui-monospace), inside diagrams only
 
 **Character:** A plain grotesk that stays out of the map's way, next to a condensed mono that reads like notes on a drawing.
 
 ### Hierarchy
-- **Display** (700, clamp(2.2rem, 4.6vw, 4.4rem), 1.03): the hero line.
+- **Hero** (700, clamp(2.25rem, 9.6vw, 8rem), 0.96, -0.035em): the home page line, which takes two lines at 1440 and at 375. Keep it to 38 characters or fewer.
+- **Display** (700, clamp(2.2rem, 4.6vw, 4.4rem), 1.03): page titles off the home page.
 - **Headline** (700, clamp(1.6rem, 2.8vw, 2.4rem), 1.1): section headings on the spine.
 - **Title** (700, clamp(1.4rem, 2.4vw, 2.1rem), 1.1): the featured case. Project rows use clamp(1.15rem, 1.7vw, 1.45rem).
 - **Body** (400, 1rem, 1.65): paragraphs, capped at 60ch.
-- **Label** (400 or 600, 0.75rem to 0.85rem, Martian Mono): map labels, dates, stacks. Sentence case, no extra tracking.
+- **Label** (400, 0.875rem, graphite, `.meta-label`): dates, stacks, the line above a title. Sentence case, no extra tracking.
+- **Diagram** (Martian Mono, 600 for names, 400 graphite for notes): 15.5 and 14.5 SVG units in the scene, which render at about 14 and 13px on a 1440 screen. Sentence case, no extra tracking.
 
 ### Named Rules
-**The Annotation Rule.** Mono appears only where the text names a service, a date or a stack. Headings, buttons and body copy are never mono.
+**The Annotation Rule.** Mono appears only inside diagrams, where it names a service or a connection. Dates, stacks, headings, buttons and body copy use the text face.
 
 ## 4. Elevation
 
@@ -139,10 +153,15 @@ Flat. There are no shadows and no blur. Depth comes from ink outlines, hairline 
 ### Navigation
 - Text links in graphite. Hover turns them ink with a vermilion underline offset 6px. The current page carries a 2px vermilion bar. The theme switch is a text button reading Light or Dark, not a sun and moon. Phones keep the same single row.
 
-### Systems Map
-- An SVG of the Stenella containers. Nodes are paper rectangles with a 1.4px ink outline (2.8px for the key node). Connectors are 1.2px graphite with arrowheads. Zones are dashed graphite, because they mark where each service runs. Labels use Martian Mono at 600; sub-labels are graphite and never render below 10px.
-- Packets are vermilion dots that run along the connectors three times with SVG `animateMotion`, then rest. Pointing at the map replays them. They are hidden under `prefers-reduced-motion`.
-- Under 768px the map becomes a vertical flow list with square ink-outlined nodes on a graphite line. The list is the text version of the map at every width.
+### Systems Scene
+- An SVG of the Stenella containers on the home page (`SystemsScene.tsx`, `systems-scene.css`). Nodes are paper rectangles with a 1.4px ink outline (2.6px for the Backend API). Connectors are graphite with arrowheads. Zones are dashed graphite, because they mark where each service runs.
+- Six beats over 4.4 screens of scroll, held on a sticky stage: level 1 context, level 2 containers, one reading on the legacy route in five numbered hops, the webhook route, a zoom into the backend's four components, then both routes. CSS scroll timelines drive every beat, so the scene ships no client JS.
+- Each beat is a move, then a hold, with one kind of change at a time. Parts outside the current beat drop to 40%, never lower. The zoom follows the van Wijk and Nuij path, and the backend's labels leave before its components arrive.
+- It runs only with scroll-timeline support, no reduced-motion preference and a viewport of at least 1260 by 740. Everyone else sees the finished composition with both routes. From 760 to 1259 it keeps a 1120px minimum width and scrolls sideways; under 760 the captions and a link to the case study diagram stand in for it. The six captions are the text version at every width.
+
+### Routing Switch
+- Off, Shadow and Primary radios for bed 4, beside a fork from the bed's monitor to the nurses' screen through the legacy service and the new route. The radios and `:has()` pick the route, with no client JS.
+- Vermilion dots loop along the live routes, and a "Pause the moving dots" checkbox stops them. Under reduced motion the dots never run and the live route is drawn in vermilion.
 
 ### Spine
 - A 1px hairline down the left of the content column. Section headings sit on it as 13px squares (paper fill, 2px ink border) and timeline roles as 7px ink squares.
@@ -150,7 +169,8 @@ Flat. There are no shadows and no blur. Depth comes from ink outlines, hairline 
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** keep vermilion to packets, underlines, the current-page bar and the focus ring.
+- **Do** keep vermilion to the reading's route and its marks, underlines, the current-page bar and the focus ring.
+- **Do** give any motion that runs longer than 5 s on its own a way to pause it (WCAG 2.2.2).
 - **Do** cap paragraphs at 60ch and separate sections with space and hairlines.
 - **Do** design each screen in light first, then check it in dark.
 - **Do** leave out a fact the repo doesn't have (a year, a role) instead of showing a placeholder.
@@ -162,5 +182,5 @@ Flat. There are no shadows and no blur. Depth comes from ink outlines, hairline 
 - **Don't** drift into the polished-but-soulless corporate agency portfolio feel.
 - **Don't** round a corner. Zero border-radius is load-bearing.
 - **Don't** add shadows, glass or blur.
-- **Don't** set headings or buttons in mono.
+- **Don't** set anything outside a diagram in mono.
 - **Don't** put text on a vermilion background.
