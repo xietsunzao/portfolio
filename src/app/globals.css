@@ -110,8 +110,9 @@
     @apply mb-8 text-[clamp(1.6rem,2.8vw,2.4rem)] font-bold leading-[1.1] tracking-[-0.015em];
   }
 
-  .mono-label {
-    @apply font-mono text-[0.78rem] leading-snug text-muted-foreground;
+  /* Dates, stacks and the line above a title, in the text face, since mono stays inside diagrams. */
+  .meta-label {
+    @apply text-[0.875rem] leading-snug text-muted-foreground;
   }
 
   .pencil-link {

@@ -91,10 +91,10 @@ export default function Home(): React.JSX.Element {
           <section id="work" className={sectionSpacing}>
             <h2 className={sectionHeading}>Work</h2>
 
-            <article className="grid gap-[clamp(24px,4vw,56px)] lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:items-start">
+            <article className="grid gap-x-[clamp(32px,5vw,72px)] gap-y-5 lg:grid-cols-2">
               <div>
                 {currentRole && (
-                  <p className="mono-label">
+                  <p className="meta-label">
                     {[currentRole.company, currentRole.period].filter(Boolean).join(" · ")}
                   </p>
                 )}
@@ -102,8 +102,10 @@ export default function Home(): React.JSX.Element {
                   {featured.title}
                 </h3>
                 <p className="mt-4 max-w-[60ch] leading-[1.65]">{featured.description}</p>
+              </div>
+              <div>
                 {featured.facts && (
-                  <ul className="mt-5 grid max-w-[60ch] gap-2.5">
+                  <ul className="grid max-w-[60ch] gap-2.5">
                     {featured.facts.map((fact) => (
                       <li
                         key={fact}
@@ -114,21 +116,13 @@ export default function Home(): React.JSX.Element {
                     ))}
                   </ul>
                 )}
-                <p className="mono-label mt-5">{featured.stack.join(" · ")}</p>
+                <p className="meta-label mt-5">{featured.stack.join(" · ")}</p>
                 {featured.caseStudy && (
                   <Link href={featured.caseStudy} className="pencil-link mt-4">
                     Read the full case study
                   </Link>
                 )}
               </div>
-              <Image
-                src={featured.image}
-                alt={featured.imageAlt ?? featured.title}
-                width={704}
-                height={928}
-                sizes="(min-width: 1024px) 26rem, 100vw"
-                className="h-auto w-full max-w-[26rem] border border-border"
-              />
             </article>
 
             <ul className="mt-14">
@@ -137,21 +131,23 @@ export default function Home(): React.JSX.Element {
                   key={project.title}
                   className="grid gap-[clamp(18px,3vw,40px)] border-t border-border py-[26px] sm:grid-cols-[220px_minmax(0,1fr)]"
                 >
-                  <div className="relative aspect-[16/10] border border-border">
-                    <Image
-                      src={project.image}
-                      alt={project.imageAlt ?? project.title}
-                      fill
-                      sizes="(min-width: 640px) 220px, 100vw"
-                      className="object-cover object-top"
-                    />
-                  </div>
+                  {project.image && (
+                    <div className="relative aspect-[16/10] border border-border">
+                      <Image
+                        src={project.image}
+                        alt={project.imageAlt ?? project.title}
+                        fill
+                        sizes="(min-width: 640px) 220px, 100vw"
+                        className="object-cover object-top"
+                      />
+                    </div>
+                  )}
                   <div>
                     <h3 className="text-[clamp(1.15rem,1.7vw,1.45rem)] font-bold leading-[1.15] tracking-[-0.015em]">
                       {project.title}
                     </h3>
                     <p className="mt-2 max-w-[60ch] leading-[1.65]">{project.description}</p>
-                    <p className="mono-label mt-3">{project.stack.join(" · ")}</p>
+                    <p className="meta-label mt-3">{project.stack.join(" · ")}</p>
                     <div className="mt-2 flex flex-wrap gap-x-6">
                       {project.demo && (
                         <a href={project.demo} className="pencil-link">
@@ -179,7 +175,7 @@ export default function Home(): React.JSX.Element {
               <ol className="grid content-start gap-[22px]">
                 {experience.map((role) => (
                   <li key={`${role.company} ${role.title}`} className="spine-tick leading-[1.55]">
-                    {role.period && <span className="mono-label block">{role.period}</span>}
+                    {role.period && <span className="meta-label block">{role.period}</span>}
                     <b className="font-bold">{role.title}</b>, {role.company}
                   </li>
                 ))}
@@ -199,7 +195,7 @@ export default function Home(): React.JSX.Element {
                   students on REST API design and databases.
                 </p>
                 <p className="text-muted-foreground">
-                  Tools: <span className="font-mono text-[0.85em]">{tools.join(", ")}</span>
+                  Tools: {tools.join(", ")}
                 </p>
               </div>
             </div>

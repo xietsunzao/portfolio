@@ -25,7 +25,7 @@ export default function ProjectsPage(): React.JSX.Element {
               </h2>
               <div>
                 <p className="max-w-[60ch] leading-[1.65]">{project.description}</p>
-                <p className="mono-label mt-3">{project.stack.join(" · ")}</p>
+                <p className="meta-label mt-3">{project.stack.join(" · ")}</p>
                 <div className="mt-2 flex flex-wrap gap-x-6">
                   {project.caseStudy && (
                     <Link href={project.caseStudy} className="pencil-link">

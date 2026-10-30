@@ -12,7 +12,7 @@ const sans = Hanken_Grotesk({
   subsets: ["latin"],
 });
 
-// The wdth axis lets labels run condensed (fontFamily.mono in tailwind.config.ts).
+// The wdth axis lets the diagram labels in systems-scene.css run condensed.
 const mono = Martian_Mono({
   variable: "--font-mono",
   subsets: ["latin"],

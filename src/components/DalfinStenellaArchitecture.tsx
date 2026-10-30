@@ -79,14 +79,15 @@ function GroupLabel({ x, y, label }: { x: number; y: number; label: string }) {
   )
 }
 
-// Same rhythm as the home page map. Three passes, then rest until the pointer enters the diagram.
+// One pass, then rest until the pointer enters the diagram. The last dot stops at 3.9 s, inside the
+// 5 s that WCAG 2.2.2 allows for motion with no pause control.
 function FlowDot({ pathId, duration = 2.4, delay = 0 }: { pathId: string; duration?: number; delay?: number }) {
   return (
     <circle r={3} className="fill-brand motion-reduce:hidden">
       <animateMotion
         dur={`${duration}s`}
         begin={`${delay}s;c4Diagram.mouseover`}
-        repeatCount="3"
+        repeatCount="1"
         restart="whenNotActive"
         fill="freeze"
       >
