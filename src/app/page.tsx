@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
+import { RoutingSwitch } from "@/components/RoutingSwitch"
 import { SystemsScene } from "@/components/SystemsScene"
 import "@/components/systems-scene.css"
 import { experience } from "@/data/experience"
@@ -86,6 +87,7 @@ export default function Home(): React.JSX.Element {
       <div className="page-column">
         <div className="spine">
           <SystemsScene />
+          <RoutingSwitch />
           <section id="work" className={sectionSpacing}>
             <h2 className={sectionHeading}>Work</h2>
 

@@ -62,11 +62,12 @@
   }
 }
 
-.systems-scene .map text {
+.systems-scene .map text,
+.routing-switch .switch-map text {
   font-family: var(--font-mono);
   font-variation-settings: "wdth" 87.5;
 }
-.systems-scene .node {
+:is(.systems-scene, .routing-switch) .node {
   fill: oklch(var(--background));
   stroke: oklch(var(--foreground));
   stroke-width: 1.4;
@@ -75,14 +76,18 @@
 .systems-scene .node.key {
   stroke-width: 2.6;
 }
-.systems-scene .node-title {
-  font-size: 15.5px;
+:is(.systems-scene, .routing-switch) .node-title {
   font-weight: 600;
   fill: oklch(var(--foreground));
 }
+:is(.systems-scene, .routing-switch) .node-note {
+  fill: oklch(var(--muted-foreground));
+}
+.systems-scene .node-title {
+  font-size: 15.5px;
+}
 .systems-scene .node-note {
   font-size: 14.5px;
-  fill: oklch(var(--muted-foreground));
 }
 .systems-scene .node-value {
   font-size: 14.5px;
@@ -105,7 +110,7 @@
   stroke: oklch(var(--muted-foreground));
   stroke-width: 1.3;
 }
-.systems-scene .arrowhead {
+:is(.systems-scene, .routing-switch) .arrowhead {
   fill: oklch(var(--muted-foreground));
   fill: context-stroke;
 }
@@ -187,6 +192,156 @@
 }
 .systems-scene :is(.system-title, .stubs, .trail-legacy, .trail-tsdb, .dot, .components, .hop, .node-value) {
   opacity: 0;
+}
+
+/* The routing switch: radio inputs and :has() pick which route carries bed 4. */
+.routing-switch {
+  display: grid;
+  gap: 36px 72px;
+  align-items: start;
+  padding-top: clamp(48px, 7vw, 104px);
+}
+@media (min-width: 900px) {
+  .routing-switch {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 25rem);
+  }
+}
+.routing-switch p {
+  max-width: 46ch;
+  font-size: 1.125rem;
+  line-height: 1.55;
+}
+.routing-switch .switch {
+  margin-top: 28px;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.routing-switch legend {
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.routing-switch .switch label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 22px;
+  background: oklch(var(--secondary));
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+.routing-switch .switch input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.routing-switch .switch label:has(input:checked) {
+  background: oklch(var(--foreground));
+  color: oklch(var(--background));
+}
+.routing-switch .switch label:has(input:focus-visible) {
+  outline: 2px solid oklch(var(--ring));
+  outline-offset: 2px;
+}
+.routing-switch .mode {
+  display: none;
+  margin-top: 22px;
+}
+.routing-switch:has(#route-off:checked) .mode-off,
+.routing-switch:has(#route-shadow:checked) .mode-shadow,
+.routing-switch:has(#route-primary:checked) .mode-primary {
+  display: block;
+}
+/* The dots loop while the section is on screen, so WCAG 2.2.2 needs a way to stop them. */
+.routing-switch .pause {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin-top: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.routing-switch .pause input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: oklch(var(--foreground));
+  cursor: pointer;
+}
+.routing-switch .switch-map {
+  display: block;
+  width: 100%;
+  max-width: 25rem;
+  height: auto;
+}
+.routing-switch .node-title {
+  font-size: 16px;
+}
+.routing-switch .node-note {
+  font-size: 15px;
+}
+.routing-switch .seg {
+  fill: none;
+  stroke: oklch(var(--foreground));
+  stroke-width: 2;
+  transition:
+    opacity 240ms ease,
+    stroke 240ms ease;
+}
+.routing-switch .route-box {
+  transition: opacity 240ms ease;
+}
+.routing-switch .flow {
+  display: none;
+  fill: none;
+  stroke: oklch(var(--brand));
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-dasharray: 0.1 86;
+  animation: scene-flow 0.9s linear infinite;
+}
+.routing-switch:has(#pause-flow:checked) .flow {
+  animation-play-state: paused;
+}
+.routing-switch:has(#route-off:checked) :is(.seg-new-in, .seg-new-out, .box-new),
+.routing-switch:has(#route-primary:checked) :is(.seg-legacy-in, .seg-legacy-out, .box-legacy) {
+  opacity: 0.4;
+  stroke: oklch(var(--muted-foreground));
+}
+.routing-switch:has(#route-shadow:checked) .seg-new-out {
+  opacity: 0.4;
+  stroke: oklch(var(--muted-foreground));
+  stroke-dasharray: 5 5;
+}
+.routing-switch:has(#route-off:checked) .flow-legacy,
+.routing-switch:has(#route-shadow:checked) :is(.flow-legacy, .flow-shadow),
+.routing-switch:has(#route-primary:checked) .flow-new {
+  display: inline;
+}
+/* Without the dots, the live route is drawn in vermilion instead. */
+@media (prefers-reduced-motion: reduce) {
+  .routing-switch .flow {
+    display: none !important;
+  }
+  .routing-switch .pause {
+    display: none;
+  }
+  .routing-switch .seg {
+    stroke: oklch(var(--brand));
+  }
+}
+@keyframes scene-flow {
+  to {
+    stroke-dashoffset: -86.1;
+  }
 }
 
 /* Live: the stage holds for 3.4 screens and every part follows one view timeline. Each beat is a
