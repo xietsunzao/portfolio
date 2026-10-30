@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { SystemsMap } from "@/components/SystemsMap"
+import { SystemsScene } from "@/components/SystemsScene"
+import "@/components/systems-scene.css"
 import { experience } from "@/data/experience"
 import { projects, type Project } from "@/data/projects"
 import { siteUrl } from "@/lib/site"
@@ -65,8 +66,8 @@ export default function Home(): React.JSX.Element {
         <h1 className="hero-heading">I build the backends hospitals run on.</h1>
         <div className="mt-[clamp(28px,3vw,44px)] flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
           <p className="max-w-[46ch] text-[clamp(1.125rem,1.5vw,1.35rem)] leading-[1.5]">
-            Jefri Maruli, senior backend developer at Dalfin HealthCare. The map below shows the
-            ICU platform I work on, simplified.
+            Jefri Maruli, senior backend developer at Dalfin HealthCare. Below, one heart-rate
+            reading crosses the ICU platform I work on.
           </p>
           <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
             <Link
@@ -84,7 +85,7 @@ export default function Home(): React.JSX.Element {
 
       <div className="page-column">
         <div className="spine">
-          <SystemsMap />
+          <SystemsScene />
           <section id="work" className={sectionSpacing}>
             <h2 className={sectionHeading}>Work</h2>
 

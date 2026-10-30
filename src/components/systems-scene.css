@@ -1,0 +1,889 @@
+/* The home page scene: one heart-rate reading crosses Stenella's C4 levels as the page scrolls.
+   Plain global CSS rather than a CSS Module, which would rename every class, keyframe and input id
+   these rules match; each rule is scoped under its component's root class instead. Everything
+   outside the @supports block is the finished composition that reduced motion, narrow screens and
+   browsers without scroll timelines see. */
+
+.systems-scene {
+  --ease-move: cubic-bezier(0.65, 0, 0.35, 1);
+}
+.systems-scene .stage {
+  display: grid;
+  gap: 28px;
+}
+.systems-scene .stage-head {
+  display: grid;
+  gap: 20px 56px;
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .systems-scene .stage-head {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 31rem);
+  }
+}
+.systems-scene .beats {
+  display: grid;
+  gap: 14px;
+}
+.systems-scene .beat {
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+.systems-scene .comp-list {
+  margin-top: 10px;
+  padding-left: 1.1em;
+  list-style: square;
+  font-size: 1rem;
+}
+.systems-scene .frame {
+  overflow-x: auto;
+}
+.systems-scene .map {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.systems-scene .map-link {
+  display: none;
+}
+/* Below 1260px the drawing keeps its size and scrolls sideways instead of shrinking its labels. */
+@media (max-width: 1259px) {
+  .systems-scene .map {
+    min-width: 1120px;
+  }
+}
+/* Below 760px even that is too wide, so the captions and the case study link stand in for it. */
+@media (max-width: 759px) {
+  .systems-scene .frame {
+    display: none;
+  }
+  .systems-scene .map-link {
+    display: block;
+  }
+}
+
+.systems-scene .map text {
+  font-family: var(--font-mono);
+  font-variation-settings: "wdth" 87.5;
+}
+.systems-scene .node {
+  fill: oklch(var(--background));
+  stroke: oklch(var(--foreground));
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+.systems-scene .node.key {
+  stroke-width: 2.6;
+}
+.systems-scene .node-title {
+  font-size: 15.5px;
+  font-weight: 600;
+  fill: oklch(var(--foreground));
+}
+.systems-scene .node-note {
+  font-size: 14.5px;
+  fill: oklch(var(--muted-foreground));
+}
+.systems-scene .node-value {
+  font-size: 14.5px;
+  font-weight: 600;
+  fill: oklch(var(--foreground));
+}
+.systems-scene .edge-label,
+.systems-scene .comp-label {
+  fill: oklch(var(--muted-foreground));
+  paint-order: stroke;
+  stroke: oklch(var(--background));
+  stroke-linejoin: round;
+}
+.systems-scene .edge-label {
+  font-size: 14.5px;
+  stroke-width: 6px;
+}
+.systems-scene .edge {
+  fill: none;
+  stroke: oklch(var(--muted-foreground));
+  stroke-width: 1.3;
+}
+.systems-scene .arrowhead {
+  fill: oklch(var(--muted-foreground));
+  fill: context-stroke;
+}
+.systems-scene .zone,
+.systems-scene .boundary {
+  fill: none;
+  stroke: oklch(var(--muted-foreground));
+  stroke-width: 1.2;
+  stroke-dasharray: 4 4;
+}
+.systems-scene .map .system-name {
+  font-family: var(--font-sans);
+  font-variation-settings: normal;
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  fill: oklch(var(--foreground));
+}
+.systems-scene .system-note {
+  font-size: 15px;
+  fill: oklch(var(--muted-foreground));
+}
+.systems-scene .trail {
+  fill: none;
+  stroke: oklch(var(--brand));
+  stroke-width: 2.4;
+  stroke-dasharray: 100 100;
+  stroke-dashoffset: 0;
+}
+.systems-scene .head {
+  fill: oklch(var(--brand));
+}
+.systems-scene .dot {
+  fill: none;
+  stroke: oklch(var(--brand));
+  stroke-width: 11;
+  stroke-linecap: round;
+  stroke-dasharray: 0.1 200;
+}
+.systems-scene .hop circle {
+  fill: oklch(var(--background));
+  stroke: oklch(var(--brand));
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+.systems-scene .hop text {
+  font-size: 14.5px;
+  font-weight: 600;
+  fill: oklch(var(--foreground));
+}
+.systems-scene .comp-box {
+  fill: oklch(var(--background));
+  stroke: oklch(var(--foreground));
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+.systems-scene .comp-edge {
+  fill: none;
+  stroke: oklch(var(--muted-foreground));
+  stroke-width: 5;
+}
+.systems-scene .comp-heading {
+  font-size: 30px;
+  font-weight: 600;
+  fill: oklch(var(--foreground));
+}
+.systems-scene .comp-title {
+  font-size: 28px;
+  font-weight: 600;
+  fill: oklch(var(--foreground));
+}
+.systems-scene .comp-note {
+  font-size: 28px;
+  fill: oklch(var(--muted-foreground));
+}
+.systems-scene .comp-label {
+  font-size: 28px;
+  stroke-width: 12px;
+}
+.systems-scene :is(.system-title, .stubs, .trail-legacy, .trail-tsdb, .dot, .components, .hop, .node-value) {
+  opacity: 0;
+}
+
+/* Live: the stage holds for 3.4 screens and every part follows one view timeline. Each beat is a
+   move, then a hold, with one kind of change at a time, and parts that move together move at once. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 1260px) and (min-height: 740px) {
+    .systems-scene {
+      height: 440svh;
+      view-timeline: --systems-scene block;
+    }
+    .systems-scene .stage {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      padding-block: 24px;
+      align-content: center;
+    }
+    .systems-scene .beats {
+      grid-template-areas: "beat";
+    }
+    .systems-scene .beat {
+      grid-area: beat;
+    }
+    .systems-scene .comp-list {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+    .systems-scene .frame {
+      overflow: visible;
+    }
+
+    .systems-scene .timed {
+      animation-timeline: --systems-scene;
+      animation-range: contain 0% contain 100%;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+    }
+
+    /* Level 1 to level 2 in stages: the box opens, the containers appear together, then the edges draw. */
+    .systems-scene .camera {
+      transform-box: view-box;
+      transform-origin: 840px 432px;
+      animation-name: scene-camera;
+    }
+    .systems-scene :is(.system-title, .stubs) {
+      animation-name: scene-fade-out;
+      animation-range: contain 8% contain 11%;
+    }
+    .systems-scene .boundary {
+      animation-name: scene-boundary-open;
+      animation-range: contain 8% contain 12%;
+    }
+    .systems-scene .boundary-label {
+      animation-name: scene-fade-in;
+      animation-range: contain 12% contain 15%;
+    }
+    .systems-scene .group-legacy {
+      animation-name: scene-group-legacy;
+    }
+    .systems-scene .group-backend {
+      animation-name: scene-group-backend;
+    }
+    .systems-scene .group-nurses {
+      animation-name: scene-group-nurses;
+    }
+    .systems-scene .group-external {
+      animation-name: scene-group-external;
+    }
+    .systems-scene .edges-legacy {
+      animation-name: scene-edges-legacy;
+    }
+    .systems-scene .edges-other {
+      animation-name: scene-edges-other;
+    }
+
+    /* One reading on the legacy route, as a C4 dynamic view: eased hops with a dwell in each container. */
+    .systems-scene .trail-legacy {
+      animation-name: scene-legacy-trail, scene-fade-out;
+      animation-range: contain 0% contain 100%, contain 48% contain 50%;
+    }
+    .systems-scene .dot-legacy {
+      animation-name: scene-legacy-ride, scene-legacy-blip;
+    }
+    .systems-scene .trail-tsdb {
+      animation-name: scene-draw, scene-fade-out;
+      animation-range: contain 33% contain 35%, contain 48% contain 50%;
+      animation-timing-function: var(--ease-move), linear;
+    }
+    .systems-scene .dot-tsdb {
+      animation-name: scene-ride, scene-blip;
+      animation-range: contain 33% contain 35%;
+      animation-timing-function: var(--ease-move), linear;
+    }
+    .systems-scene .lit-broker {
+      animation-name: scene-lit;
+      animation-range: contain 29% contain 46%;
+    }
+    .systems-scene .lit-telemetry {
+      animation-name: scene-lit;
+      animation-range: contain 32.5% contain 46%;
+    }
+    .systems-scene .lit-tsdb {
+      animation-name: scene-lit;
+      animation-range: contain 35% contain 46%;
+    }
+    .systems-scene .lit-dashboard {
+      animation-name: scene-lit;
+      animation-range: contain 36% contain 46%;
+    }
+    .systems-scene .lit-nurses {
+      animation-name: scene-lit;
+      animation-range: contain 39.5% contain 46%;
+    }
+    .systems-scene .hop-1 {
+      animation-name: scene-hop;
+      animation-range: contain 27% contain 48%;
+    }
+    .systems-scene .hop-2 {
+      animation-name: scene-hop;
+      animation-range: contain 31% contain 48%;
+    }
+    .systems-scene .hop-3 {
+      animation-name: scene-hop;
+      animation-range: contain 33% contain 48%;
+    }
+    .systems-scene .hop-4 {
+      animation-name: scene-hop;
+      animation-range: contain 34.5% contain 48%;
+    }
+    .systems-scene .hop-5 {
+      animation-name: scene-hop;
+      animation-range: contain 38% contain 48%;
+    }
+    .systems-scene .note-devices {
+      animation-name: scene-dip;
+      animation-range: contain 25% contain 48%;
+    }
+    .systems-scene .value-devices {
+      animation-name: scene-rise;
+      animation-range: contain 25% contain 48%;
+    }
+    .systems-scene .note-dashboard {
+      animation-name: scene-dip;
+      animation-range: contain 36% contain 48%;
+    }
+    .systems-scene .value-dashboard {
+      animation-name: scene-rise;
+      animation-range: contain 36% contain 48%;
+    }
+
+    /* The new route: a webhook into the backend, then the camera zooms into it to level 3. */
+    .systems-scene .new-routes {
+      animation-name: scene-zoom-hide;
+    }
+    .systems-scene .route-webhook {
+      animation-name: scene-draw;
+      animation-range: contain 48% contain 53%;
+      animation-timing-function: var(--ease-move);
+    }
+    .systems-scene .dot-webhook {
+      animation-name: scene-ride, scene-blip;
+      animation-range: contain 48% contain 53%;
+      animation-timing-function: var(--ease-move), linear;
+    }
+    .systems-scene :is(.head-webhook, .label-webhook) {
+      animation-name: scene-fade-in;
+      animation-range: contain 52% contain 53.5%;
+    }
+    .systems-scene .lit-backend {
+      animation-name: scene-lit;
+      animation-range: contain 53% contain 60%;
+    }
+    .systems-scene .backend-label {
+      animation-name: scene-backend-labels;
+    }
+    .systems-scene .components {
+      animation-name: scene-components;
+    }
+    .systems-scene .comp-arrow-1 {
+      animation-name: scene-lit-edge;
+      animation-range: contain 64.5% contain 84%;
+    }
+    .systems-scene .comp-1 {
+      animation-name: scene-lit-stay;
+      animation-range: contain 66% contain 84%;
+    }
+    .systems-scene .comp-arrow-2 {
+      animation-name: scene-lit-edge;
+      animation-range: contain 68% contain 84%;
+    }
+    .systems-scene .comp-2 {
+      animation-name: scene-lit-stay;
+      animation-range: contain 69.5% contain 84%;
+    }
+    .systems-scene .comp-arrow-3 {
+      animation-name: scene-lit-edge;
+      animation-range: contain 71.5% contain 84%;
+    }
+    .systems-scene .comp-3 {
+      animation-name: scene-lit-stay;
+      animation-range: contain 73% contain 84%;
+    }
+    .systems-scene .comp-arrow-5 {
+      animation-name: scene-lit-edge;
+      animation-range: contain 74.5% contain 84%;
+    }
+    .systems-scene .comp-arrow-4 {
+      animation-name: scene-lit-edge;
+      animation-range: contain 75% contain 84%;
+    }
+    .systems-scene .comp-4 {
+      animation-name: scene-lit-stay;
+      animation-range: contain 76.5% contain 84%;
+    }
+    .systems-scene .comp-arrow-6 {
+      animation-name: scene-lit-edge;
+      animation-range: contain 78% contain 84%;
+    }
+    .systems-scene .route-vitals {
+      animation-name: scene-draw;
+      animation-range: contain 92% contain 96.5%;
+      animation-timing-function: var(--ease-move);
+    }
+    .systems-scene .route-feed {
+      animation-name: scene-draw;
+      animation-range: contain 92.5% contain 97%;
+      animation-timing-function: var(--ease-move);
+    }
+    .systems-scene :is(.head-vitals, .label-vitals) {
+      animation-name: scene-fade-in;
+      animation-range: contain 96% contain 97.5%;
+    }
+    .systems-scene :is(.head-feed, .label-feed) {
+      animation-name: scene-fade-in;
+      animation-range: contain 96.5% contain 98%;
+    }
+
+    .systems-scene .beat-1 {
+      animation-name: scene-fade-out;
+      animation-range: contain 10% contain 12%;
+    }
+    .systems-scene .beat-2 {
+      animation-name: scene-caption;
+      animation-range: contain 12% contain 27%;
+    }
+    .systems-scene .beat-3 {
+      animation-name: scene-caption;
+      animation-range: contain 27% contain 48%;
+    }
+    .systems-scene .beat-4 {
+      animation-name: scene-caption;
+      animation-range: contain 48% contain 62%;
+    }
+    .systems-scene .beat-5 {
+      animation-name: scene-caption;
+      animation-range: contain 62% contain 86%;
+    }
+    .systems-scene .beat-6 {
+      animation-name: scene-fade-in;
+      animation-range: contain 88% contain 90%;
+    }
+  }
+}
+
+/* The zoom samples the van Wijk and Nuij path (d3.interpolateZoom, rho = sqrt 2) at even steps and
+   places them through a cubic in-out ease: even speed along the path, slow out of rest and into rest. */
+@keyframes scene-camera {
+  0%,
+  8% {
+    transform: translate(-24px, -14.2px) scale(0.9);
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  20%,
+  56% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  58.52% {
+    transform: translate(-52.8px, -31.2px) scale(1.175);
+  }
+  59.17% {
+    transform: translate(-95.2px, -56.4px) scale(1.415);
+  }
+  59.63% {
+    transform: translate(-129.8px, -76.8px) scale(1.732);
+  }
+  60% {
+    transform: translate(-158.3px, -93.7px) scale(2.144);
+  }
+  60.37% {
+    transform: translate(-182.4px, -107.9px) scale(2.674);
+  }
+  60.83% {
+    transform: translate(-203.2px, -120.3px) scale(3.35);
+  }
+  61.48% {
+    transform: translate(-222.1px, -131.4px) scale(4.21);
+  }
+  64%,
+  84% {
+    transform: translate(-240px, -142px) scale(5.3);
+  }
+  86.52% {
+    transform: translate(-222.1px, -131.4px) scale(4.21);
+  }
+  87.17% {
+    transform: translate(-203.2px, -120.3px) scale(3.35);
+  }
+  87.63% {
+    transform: translate(-182.4px, -107.9px) scale(2.674);
+  }
+  88% {
+    transform: translate(-158.3px, -93.7px) scale(2.144);
+  }
+  88.37% {
+    transform: translate(-129.8px, -76.8px) scale(1.732);
+  }
+  88.83% {
+    transform: translate(-95.2px, -56.4px) scale(1.415);
+  }
+  89.48% {
+    transform: translate(-52.8px, -31.2px) scale(1.175);
+  }
+  92%,
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+/* The path runs from x 198 to 998: the broker covers 8 to 32.5, telemetry 38 to 62.5 and the
+   dashboard 68 to 92.5. The dot rides under the boxes, so its time inside each one is the dwell. */
+@keyframes scene-legacy-ride {
+  0%,
+  27% {
+    stroke-dashoffset: 0;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  29% {
+    stroke-dashoffset: -8;
+  }
+  31% {
+    stroke-dashoffset: -32.5;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  32.5% {
+    stroke-dashoffset: -38;
+  }
+  34.5% {
+    stroke-dashoffset: -62.5;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  36% {
+    stroke-dashoffset: -68;
+  }
+  38% {
+    stroke-dashoffset: -92.5;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  39.5%,
+  100% {
+    stroke-dashoffset: -100;
+  }
+}
+@keyframes scene-legacy-trail {
+  0%,
+  27% {
+    stroke-dashoffset: 100;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  29% {
+    stroke-dashoffset: 92;
+  }
+  31% {
+    stroke-dashoffset: 67.5;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  32.5% {
+    stroke-dashoffset: 62;
+  }
+  34.5% {
+    stroke-dashoffset: 37.5;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  36% {
+    stroke-dashoffset: 32;
+  }
+  38% {
+    stroke-dashoffset: 7.5;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  39.5%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes scene-legacy-blip {
+  0%,
+  26.8% {
+    opacity: 0;
+  }
+  27.2%,
+  39.5% {
+    opacity: 1;
+  }
+  40.5%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes scene-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes scene-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes scene-draw {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes scene-ride {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+@keyframes scene-blip {
+  0% {
+    opacity: 0;
+  }
+  3%,
+  97% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes scene-lit {
+  0% {
+    stroke: oklch(var(--foreground));
+  }
+  4%,
+  96% {
+    stroke: oklch(var(--brand));
+  }
+  100% {
+    stroke: oklch(var(--foreground));
+  }
+}
+@keyframes scene-lit-stay {
+  0% {
+    stroke: oklch(var(--foreground));
+  }
+  6%,
+  100% {
+    stroke: oklch(var(--brand));
+  }
+}
+@keyframes scene-lit-edge {
+  0% {
+    stroke: oklch(var(--muted-foreground));
+  }
+  6%,
+  100% {
+    stroke: oklch(var(--brand));
+  }
+}
+@keyframes scene-boundary-open {
+  from {
+    stroke: oklch(var(--foreground));
+    stroke-width: 2.6;
+    stroke-dasharray: 8 0;
+  }
+  to {
+    stroke: oklch(var(--muted-foreground));
+    stroke-width: 1.2;
+    stroke-dasharray: 4 4;
+  }
+}
+@keyframes scene-caption {
+  0% {
+    opacity: 0;
+  }
+  13%,
+  87% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes scene-hop {
+  0% {
+    opacity: 0;
+  }
+  6%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes scene-dip {
+  0% {
+    opacity: 1;
+  }
+  7%,
+  93% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes scene-rise {
+  0% {
+    opacity: 0;
+  }
+  7%,
+  93% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Parts that take no part in the current beat drop to 40%, never lower; edges also hide while zoomed. */
+@keyframes scene-group-legacy {
+  0%,
+  12% {
+    opacity: 0;
+  }
+  16%,
+  48% {
+    opacity: 1;
+  }
+  50%,
+  89% {
+    opacity: 0.4;
+  }
+  93%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes scene-group-backend {
+  0%,
+  12% {
+    opacity: 0;
+  }
+  16%,
+  26% {
+    opacity: 1;
+  }
+  28%,
+  46% {
+    opacity: 0.4;
+  }
+  48%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes scene-group-nurses {
+  0%,
+  48% {
+    opacity: 1;
+  }
+  50%,
+  89% {
+    opacity: 0.4;
+  }
+  93%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes scene-group-external {
+  0%,
+  26% {
+    opacity: 1;
+  }
+  28%,
+  89% {
+    opacity: 0.4;
+  }
+  93%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes scene-edges-legacy {
+  0%,
+  15% {
+    opacity: 0;
+  }
+  20%,
+  48% {
+    opacity: 1;
+  }
+  50%,
+  56% {
+    opacity: 0.4;
+  }
+  58.5%,
+  89% {
+    opacity: 0;
+  }
+  93%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes scene-edges-other {
+  0%,
+  15% {
+    opacity: 0;
+  }
+  20%,
+  26% {
+    opacity: 1;
+  }
+  28%,
+  56% {
+    opacity: 0.4;
+  }
+  58.5%,
+  89% {
+    opacity: 0;
+  }
+  93%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes scene-zoom-hide {
+  0%,
+  56% {
+    opacity: 1;
+  }
+  58.5%,
+  89% {
+    opacity: 0;
+  }
+  92%,
+  100% {
+    opacity: 1;
+  }
+}
+/* The backend's labels leave before its components arrive, so type at two scales never overlaps. */
+@keyframes scene-backend-labels {
+  0%,
+  58.5% {
+    opacity: 1;
+  }
+  59.8%,
+  88.2% {
+    opacity: 0;
+  }
+  89.5%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes scene-components {
+  0%,
+  60.2% {
+    opacity: 0;
+  }
+  62.5%,
+  85.5% {
+    opacity: 1;
+  }
+  87.8%,
+  100% {
+    opacity: 0;
+  }
+}
