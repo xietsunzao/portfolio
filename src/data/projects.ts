@@ -1,7 +1,7 @@
 export type Project = {
   title: string
   description: string
-  image: string
+  image?: string
   imageAlt?: string
   stack: readonly string[]
   facts?: readonly string[]
@@ -15,8 +15,6 @@ export const projects: readonly Project[] = [
     title: "Dalfin Stenella Intelligent Care",
     description:
       "Real-time ICU patient monitoring, installed on-premises in each hospital. Bedside devices stream vitals to a live dashboard for ICU staff, and FHIR APIs hand the data to the hospital's own SIMRS.",
-    image: "/projects/project-9.png",
-    imageAlt: "Dalfin ICU dashboard graphic with SATUSEHAT and BPJS Kesehatan integration labels",
     caseStudy: "/projects/dalfin-stenella",
     stack: ["NestJS", "TypeScript", "PostgreSQL", "Prisma"],
     facts: [

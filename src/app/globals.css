@@ -99,42 +99,20 @@
     background: oklch(var(--foreground));
   }
 
-  .flow-list {
-    position: relative;
-    padding-left: 26px;
-  }
-  .flow-list::before {
-    content: "";
-    position: absolute;
-    left: 5px;
-    top: 10px;
-    bottom: 22px;
-    border-left: 1px solid oklch(var(--muted-foreground));
-  }
-  .flow-list > li {
-    position: relative;
-    padding-bottom: 16px;
-  }
-  .flow-list > li::before {
-    content: "";
-    position: absolute;
-    left: -26px;
-    top: 6px;
-    width: 11px;
-    height: 11px;
-    background: oklch(var(--background));
-    border: 1.5px solid oklch(var(--foreground));
-  }
-
   .display-heading {
     @apply text-balance text-[clamp(2.2rem,4.6vw,4.4rem)] font-bold leading-[1.03] tracking-[-0.025em];
+  }
+  /* Home page only: the 38-character line takes two lines at 1440. */
+  .hero-heading {
+    @apply text-balance text-[clamp(2.25rem,9.6vw,8rem)] font-bold leading-[0.96] tracking-[-0.035em];
   }
   .section-heading {
     @apply mb-8 text-[clamp(1.6rem,2.8vw,2.4rem)] font-bold leading-[1.1] tracking-[-0.015em];
   }
 
-  .mono-label {
-    @apply font-mono text-[0.78rem] leading-snug text-muted-foreground;
+  /* Dates, stacks and the line above a title, in the text face, since mono stays inside diagrams. */
+  .meta-label {
+    @apply text-[0.875rem] leading-snug text-muted-foreground;
   }
 
   .pencil-link {

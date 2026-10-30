@@ -49,7 +49,7 @@ export function DalfinStenellaTechStack(): React.JSX.Element {
           key={name}
           className="grid gap-x-[clamp(18px,3vw,40px)] gap-y-1 border-t border-border py-4 md:grid-cols-[minmax(0,2fr)_minmax(0,5fr)]"
         >
-          <dt className="font-mono text-[0.85rem] font-semibold leading-[1.65]">{name}</dt>
+          <dt className="font-semibold leading-[1.65]">{name}</dt>
           <dd className="max-w-[60ch] leading-[1.65] text-muted-foreground">{role}</dd>
         </div>
       ))}

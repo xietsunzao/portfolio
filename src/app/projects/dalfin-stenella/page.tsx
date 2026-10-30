@@ -22,7 +22,7 @@ export default function DalfinStenellaCaseStudy(): React.JSX.Element {
         <Link href="/projects" className="nav-link">
           All projects
         </Link>
-        <p className="mono-label mt-8">Case study · Dalfin HealthCare</p>
+        <p className="meta-label mt-8">Case study · Dalfin HealthCare</p>
         <h1 className="spine-node display-heading mt-2">Dalfin Stenella Intelligent Care</h1>
         <p className="mt-6 max-w-[44ch] text-[clamp(1rem,1.4vw,1.15rem)] leading-[1.6] text-muted-foreground">
           Real-time ICU patient monitoring for hospitals, deployed on-premises and built to
