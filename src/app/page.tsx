@@ -217,6 +217,9 @@ export default function Home(): React.JSX.Element {
               <a href={linkedin} className="pencil-link">
                 LinkedIn
               </a>
+              <a href="https://cv.jefrimaruli.dev/resume.pdf" className="pencil-link">
+                Resume (PDF)
+              </a>
             </div>
           </section>
         </div>
