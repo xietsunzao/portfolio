@@ -2,6 +2,7 @@ const links = [
   { name: "Email", href: "mailto:jefrimaruli@gmail.com" },
   { name: "GitHub", href: "https://github.com/xietsunzao" },
   { name: "LinkedIn", href: "https://linkedin.com/in/jefri-maruli" },
+  { name: "Resume", href: "https://cv.jefrimaruli.dev/resume.pdf" },
 ] as const
 
 export function Footer(): React.JSX.Element {
